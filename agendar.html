@@ -168,7 +168,8 @@ var tok  = localStorage.getItem('drm_token');
 var user = null;
 try { user = JSON.parse(localStorage.getItem('drm_user')); } catch(e){}
 if(!tok) window.location.href = '/login.html';
-
+console.log('token:', tok);
+console.log('user:', user);
 var diag = '', dataSel = null, horaSel = null, ocupados = {};
 var calData = new Date();
 
