@@ -620,7 +620,9 @@ transform:translateY(-0.5px);
 }
 
 
-
+.white-box{
+    background:white;
+}
 
    
 
