@@ -122,12 +122,13 @@ background-color: #ffffff !important;
    top:102px;
    bottom:30px;
     left:-5px;
+    right: -5px;
 }
 .btn-comprar {
     position: absolute;
     bottom: 6px;
-    right: 9.3px;
-    left: 9.3px;       
+    right: 14px;
+    left: auto;       
     width: auto;      
     padding: 10px 20px;
     border: none;
