@@ -228,8 +228,9 @@ console.log('problema:', prob);
         }]
       })
     });
-
+console.log('status:', r.status);     
     var text = await r.text();
+    console.log('resposta:', text); 
     var d = {};
     try { d = JSON.parse(text); } catch(e) {}
 
