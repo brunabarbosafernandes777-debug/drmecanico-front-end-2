@@ -121,8 +121,10 @@ background-color: #ffffff !important;
     margin-top:7px;*/
    top:102px;
    bottom:30px;
-    left:-10px;
-    width: calc(100% + 30px); 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* define a largura que quiser */
+
 }
 .btn-comprar {
     position: absolute;
