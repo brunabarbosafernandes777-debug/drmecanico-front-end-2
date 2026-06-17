@@ -55,6 +55,7 @@ body{
     /*overflow:visible !important; */
     overflow:hidden !important;
     min-height:739px;
+    margin:0 auto;
 }
 
  
@@ -123,6 +124,7 @@ background-color: #ffffff !important;
    bottom:30px;
     left: 50%;
     transform: translateX(-50%);
+    width:100%;
  
 
 }
