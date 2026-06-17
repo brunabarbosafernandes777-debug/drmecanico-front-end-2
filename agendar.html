@@ -6,8 +6,6 @@
 <title>dr Mecânico — Agendar</title>
 <link rel="stylesheet" href="estilos.css">
 <style>
-
-
 .bottom.nav{bottom: 
 50px !important;
 transform:translateY(-2px) !important;
@@ -20,7 +18,8 @@ transform:translateY(-2px) !important;
 display:block;
 position:absolute;
 top:0;
-
+  width:400px !important;
+  height:110.281px !important;
   left:0;
 
 }
@@ -28,13 +27,10 @@ top:0;
 
 
 
-.body{
+body{
 
-   overflow:hidden !important;
+  overflow:hidden !important;
 }
-
-
-
 
 
 
@@ -53,7 +49,7 @@ top:0;
 <body>
   <nav class="bottom-nav">
    
-    <a href="home.html">
+    <a href="login.html">
         <img src="images/house-solid-full.svg"
         class="bottom-nav-icon" alt="">
         <span>Home</span>
@@ -74,7 +70,7 @@ top:0;
     <a href="saiba-mais.html">
         <img src="images/circle-info-solid-full.svg"
         class="bottom-nav-icon" alt="">
-        <span> saber</span>
+        <span> saiba mais</span>
     </a>
 
 
@@ -107,7 +103,7 @@ top:0;
       <div class="card-body" id="body1">
         <div class="white-box">
           <div class="inner-scroll">
-          <textarea id="txt" placeholder="Descreva o que está acontecendo com seu carro..."></textarea>
+          <textarea id="txt" placeholder="Descreva o que está sentindo no seu carro..."></textarea>
           </div>
           <button class="btn-float btn-float-purple" id="btn1" onclick="analisar()">OK</button>
         </div>
@@ -159,7 +155,7 @@ top:0;
 </div>
 
 <script>
-var MECANICO_WPP = '5511995823777';
+var MECANICO_WPP = '5511940446327';
 var tok  = localStorage.getItem('drm_token');
 var user = null;
 try { user = JSON.parse(localStorage.getItem('drm_user')); } catch(e){}
@@ -167,18 +163,6 @@ if(!tok) window.location.href = '/login.html';
 
 var diag = '', dataSel = null, horaSel = null, ocupados = {};
 var calData = new Date();
-
-function mostrarSucesso() {
-  var s=document.getElementById('success');
-  s.style.cssText='display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);padding:40px 24px;';
-  document.getElementById('stxt').textContent='Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
-}
-
-// Verifica se voltou do WhatsApp após agendar
-if(localStorage.getItem('drm_agendado')==='1'){
-  localStorage.removeItem('drm_agendado');
-  mostrarSucesso();
-}
 
 // ── Troca de step ────────────────────────────────────────────
 function goStep(n) {
@@ -223,7 +207,7 @@ async function analisar() {
   document.getElementById('btn2').disabled = true;
 
   try {
-    var r = await fetch('https://drmecanico-backend-2.onrender.com/api/ai/chat', {
+    var r = await fetch('/api/ai/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok },
       body: JSON.stringify({
@@ -276,7 +260,7 @@ async function concordar() {
 
 async function carregarOcupados() {
   try {
-    var r = await fetch('https://drmecanico-backend-2.onrender.com/api/agendamentos',{headers:{'Authorization':'Bearer '+tok}});
+    var r = await fetch('/api/agendamentos',{headers:{'Authorization':'Bearer '+tok}});
     var ags = await r.json();
     ocupados = {};
     ags.forEach(function(ag){
@@ -344,36 +328,24 @@ async function confirmar() {
   var nome=user?user.name:'Cliente';
 
   try {
-    var resp=await fetch('https://drmecanico-backend-2.onrender.com/api/agendamentos',{
+    await fetch('/api/agendamentos',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+tok},
       body:JSON.stringify({tipo:prob.substring(0,60),descricao:prob+'\n\nIA:\n'+diag,data:dataSel,hora:horaSel})
     });
-    var result=await resp.json();
+    var msg=encodeURIComponent('🔧 *AGENDAMENTO - dr Mecânico*\n\n👤 '+nome+'\n📅 '+dataSel+' às '+horaSel+'\n\n🚗 '+prob+'\n\n🤖 IA:\n'+diag);
+    window.open('https://wa.me/'+MECANICO_WPP+'?text='+msg,'_blank');
 
-    // Salva data e hora antes de limpar
-    var dataSalva=dataSel, horaSalva=horaSel;
-
-    // Limpa seleção do calendário
-    dataSel=null; horaSel=null; renderCal();
-
-    if(!result.zapiOk){
-      // Salva no localStorage que agendamento foi feito
-      localStorage.setItem('drm_agendado','1');
-      // Redireciona pro WhatsApp — quando voltar mostra sucesso
-      var msg=encodeURIComponent('🔧 *AGENDAMENTO - dr Mecânico*\n\n👤 '+nome+'\n📅 '+dataSalva+' às '+horaSalva+'\n\n🚗 '+prob+'\n\n🤖 IA:\n'+diag);
-      window.location.href='https://wa.me/'+MECANICO_WPP+'?text='+msg;
-    } else {
-      // Z-API funcionou, mostra sucesso direto
-      mostrarSucesso();
-    }
-
+    document.getElementById('cards').style.display='none';
+    var s=document.getElementById('success'); s.style.display='flex';
+    document.getElementById('stxt').textContent='Agendado para '+dataSel+' às '+horaSel+'. Mecânico notificado!';
   } catch(e){
     alert('Erro ao agendar.'); btn.disabled=false; btn.innerHTML='📅 Confirmar';
   }
-} 
 
-  
+
+
+}
 </script>
 </body>
 </html>

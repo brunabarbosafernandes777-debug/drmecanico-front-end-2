@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>dr Mecânico — Saiba Mais</title>
+ 
+<link rel="stylesheet" href="estilos.css">
+<style>
+.bottom.nav{bottom: 
+50px !important;
+transform:translateY(-2px) !important;
+
+}
+
+
+
+.base{
+display:block;
+position:absolute;
+top:0;
+  width:400px !important;
+  height:110.281px !important;
+  left:0;
+
+}
+
+
+
+
+body{
+
+  overflow:hidden !important;
+}
+
+
+
+
+</style>
+</head>
+<body>
+  
+     
+<nav class="bottom-nav">
+   
+    <a href="login.html">
+        <img src="images/house-solid-full.svg"
+        class="bottom-nav-icon" alt="">
+        <span>Home</span>
+    </a>
+
+    <a href="index.html">
+        <img src="images/user-solid-full.svg"
+        class="bottom-nav-icon" alt="">
+        <span>login</span>
+    </a>
+
+    <a href="comprar.html">
+        <img src="images/cart-shopping-solid-full.svg"
+        class="bottom-nav-icon" alt="">
+        <span> comprar</span>
+    </a>
+
+    <a href="saiba-mais.html">
+        <img src="images/circle-info-solid-full.svg"
+        class="bottom-nav-icon" alt="">
+        <span> saiba mais</span>
+    </a>
+
+
+
+
+
+  </nav>
+
+
+<div class="page">
+  <div class="hdr">
+    
+    <img src="images/marca para parte de cima do app 1.svg" class="base" alt="dr Mecânico">  
+</div>
+
+  <div class="cards" id="cards">
+    <!-- CARD 1: Veículos -->
+    <div class="card card-1 open" id="c1" onclick="trocar(1)">
+     
+      <div class="card-title"> Veículos <span style="font-family:'GadugiNormal';font-weight:normal;">— quais são atendidos?</span></div>
+      <div class="card-body" id="b1">
+        <div class="white-box"> <div class="inner-scroll">
+          <div class="v-item">Volkswagen Gol — 2005 a 2020
+        </div>
+
+          <div class="v-item">Volkswagen Voyage — 2009 a 2020</div>
+          <div class="v-item">Volkswagen Fox — 2005 a 2019</div>
+          <div class="v-item">Volkswagen Saveiro — 2005 a 2020</div>
+          <div class="v-item">Fiat Uno — 2005 a 2020</div>
+          <div class="v-item">Fiat Palio — 2005 a 2017</div>
+          <div class="v-item">Fiat Siena — 2005 a 2017</div>
+          <div class="v-item">Fiat Grand Siena — 2012 a 2020</div>
+          <div class="v-item">Fiat Mobi — 2016 a 2020</div>
+          <div class="v-item">Fiat Argo 1.0 e 1.3 — 2017 a 2020</div>
+          <div class="v-item">Fiat Cronos 1.3 — 2018 a 2020</div>
+          <div class="v-item">Fiat Strada — 2005 a 2020</div>
+          <div class="v-item">Fiat Fiorino — 2005 a 2020</div>
+          <div class="v-item">Chevrolet Celta — 2005 a 2015</div>
+          <div class="v-item">Chevrolet Classic — 2005 a 2016</div>
+          <div class="v-item">Chevrolet Corsa — 2005 a 2012</div>
+          <div class="v-item">Chevrolet Prisma — 2006 a 2020</div>
+          <div class="v-item">Chevrolet Onix aspirado — 2013 a 2020</div>
+          <div class="v-item">Chevrolet Montana — 2005 a 2020</div>
+          <div class="v-item">Ford Ka — 2005 a 2020</div>
+          <div class="v-item">Ford Ka Sedan — 2014 a 2020</div>
+          <div class="v-item">Ford Fiesta Rocam — 2005 a 2014</div>
+          <div class="v-item">Ford Fiesta 1.6 aspirado — 2011 a 2019</div>
+          <div class="v-item">Renault Sandero — 2007 a 2020</div>
+          <div class="v-item">Renault Logan — 2007 a 2020</div>
+          <div class="v-item">Hyundai HB20 — 2012 a 2020</div>
+          <div class="v-item">Hyundai HB20S — 2013 a 2020</div>
+          <div class="v-item">Toyota Etios Hatch — 2012 a 2020</div>
+          <div class="v-item">Toyota Etios Sedan — 2012 a 2020</div>
+          <div class="v-item">Nissan March — 2014 a 2020</div>
+          <div class="v-item">Nissan Versa — 2014 a 2020</div>
+       </div>
+        </div>
+        <button class="btn-comprar btn-c1" onclick="event.stopPropagation();window.location.href='/comprar'">COMPRAR</button>
+        
+      </div>
+    </div>
+
+    <!-- CARD 2: Mão de obra -->
+    <div class="card card-2 closed" id="c2" onclick="trocar(2)">
+      <div class="card-title"> Mão de obra <span style="font-family:'GadugiNormal';font-weight:normal;">— o que está incluso?</span></div>
+        <div class="card-body" id="b2" style="display:none">
+      <div class="white-box"> <div class="inner-scroll">
+          <div class="s-title">1. Manutenção preventiva básica
+        </div>
+          <div class="s-sub">Serviços incluídos:</div>
+          - Troca de óleo do motor<br>- Troca de filtro de óleo<br>- Troca de filtro de ar do motor<br>- Troca de filtro de cabine<br>- Verificação e complemento de fluidos (freio, arrefecimento, direção hidráulica)<br>- Inspeção geral preventiva
+          <hr class="s-hr">
+          <div class="s-title">2. Sistema elétrico básico</div>
+          <div class="s-sub">Serviços incluídos:</div>
+          - Troca de bateria<br>- Limpeza de terminais da bateria<br>- Troca de lâmpadas (farol, lanterna, freio)<br>- Verificação básica de carga da bateria<br>- Teste simples de alternador<br>- Verificação de fusíveis<br>
+          <div class="s-sub s-nao">Não incluídos:</div><span class="s-nao">- Módulos eletrônicos<br>- Injeção avançada<br>- Programação de ECU</span>
+          <hr class="s-hr">
+          <div class="s-title">3. Sistema de freios</div>
+          <div class="s-sub">Serviços incluídos:</div>
+          - Inspeção de pastilhas e discos<br>- Troca de pastilhas de freio<br>- Troca de lonas (freio a tambor)<br>- Verificação de fluido de freio<br>- Sangria básica do sistema
+          <hr class="s-hr">
+          <div class="s-title">4. Suspensão</div>
+          <div class="s-sub">Serviços incluídos:</div>
+          - Inspeção de suspensão<br>- Troca de amortecedores<br>- Troca de molas<br>- Troca de bandejas<br>- Troca de buchas<br>- Troca de pivôs<br>- Troca de bieletas<br>- Verificação de folgas e ruídos
+          <hr class="s-hr">
+          <div class="s-title">5. Motor (serviços intermediários)</div>
+          <div class="s-sub">Serviços incluídos:</div>
+          - Troca de velas de ignição<br>- Troca de cabos de vela (quando aplicável)<br>- Limpeza de corpo de borboleta<br>- Troca de correias (exceto complexos prolongados)<br>- Diagnóstico básico de funcionamento<br>
+          <div class="s-sub s-nao">Não incluídos:</div><span class="s-nao">- Retífica de motor<br>- Cabeçote<br>- Desmontagem parcial ou completa</span>
+          <hr class="s-hr">
+          <div class="s-title">6. Câmbio (manual e automático simples)</div>
+          <div class="s-sub">Serviços incluídos:</div>
+          - Troca de óleo de câmbio manual<br>- Troca de óleo de câmbio automático (simples)<br>- Troca de embreagem<br>- Verificação de funcionamento do câmbio<br>
+          <div class="s-sub s-nao">Não incluídos:</div><span class="s-nao">- Reparo interno de câmbio automático<br>- Mecatrônica</span>
+          <hr class="s-hr">
+          <div class="s-title">7. Diagnóstico básico</div>
+          <div class="s-sub">Serviços incluídos:</div>
+          - Leitura de scanner simples (OBD básico)<br>- Reset de luz de revisão<br>- Diagnóstico de ruídos<br>- Avaliação geral do veículo
+        </div>
+        </div>
+        <button class="btn-comprar btn-c2" onclick="event.stopPropagation();window.location.href='/comprar'">COMPRAR</button>
+        </div>
+      
+    </div>
+
+    <!-- CARD 3: Guincho -->
+    <div class="card card-3 closed" id="c3" onclick="trocar(3)">
+     <div class="card-title"> Guincho <span style="font-family:'GadugiNormal';font-weight:normal;">— o que está incluso?</span></div>
+      <div class="card-body" id="b3" style="display:none">    
+     <div class="white-box"> <div class="inner-scroll">
+          - 2 (duas) utilizações de guincho por ano.<br><br>
+          - Cada utilização inclui até 50 km de ida + 50 km de retorno, contados a partir do local de atendimento.<br><br>
+          - O serviço possui caráter pontual e sob demanda, não sendo contínuo ou ilimitado.<br><br>
+          - A utilização do guincho está sujeita à disponibilidade operacional dos prestadores credenciados.<br><br>
+          - O associado pode contratar 1 (uma) utilização adicional por ano, pelo valor de R$ 100,00, nas mesmas condições de quilometragem.<br><br>
+          <strong>Excedente de quilometragem</strong><br><br>
+          - Caso a distância ultrapasse os limites de 50 km + 50 km, o valor excedente será de responsabilidade do associado.<br><br>
+          - O pagamento do excedente será feito diretamente ao prestador. O custo do km adicional pode chegar a até R$ 12,00/km.<br><br>
+          - O valor será informado previamente ao associado para sua concordância antes da execução.
+        </div>
+        </div>
+        <button class="btn-comprar btn-c3" onclick="event.stopPropagation();window.location.href='/comprar'">COMPRAR</button>
+      </div>
+      
+    </div>
+
+  </div>
+  
+</div>
+
+<script>
+var current = 1;
+function trocar(n) {
+  if(n === current) return;
+  [1,2,3].forEach(function(i) {
+    var c = document.getElementById('c'+i);
+    var b = document.getElementById('b'+i);
+    if(i === n) {
+      c.classList.remove('closed'); c.classList.add('open');
+      b.style.display = 'flex';
+    } else {
+      c.classList.remove('open'); c.classList.add('closed');
+      b.style.display = 'none';
+    }
+  });
+  current = n;
+}
+</script>
+</body>
+</html>
