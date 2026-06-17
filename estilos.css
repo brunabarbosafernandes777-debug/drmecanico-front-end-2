@@ -596,8 +596,8 @@ transform:translateY(-0.5px);
 .bottom-nav {
   position: fixed !important;
   bottom: 0px !important;
-  left: 32.9px !important;
-  right: 34px !important;
+  left: 35.5px !important;
+  right: 35.5px !important;
   height:65px;
   font-family:'Gadugi', sans-serif;
  display:flex;
