@@ -217,7 +217,7 @@ async function analisar() {
 console.log('token:', tok);
 console.log('problema:', prob);
   try {
-    var r = await fetch('/api/ai/chat',{
+    var r = await fetch('https://drmecanico.com.br/api/ai/chat',{
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok },
       body: JSON.stringify({
