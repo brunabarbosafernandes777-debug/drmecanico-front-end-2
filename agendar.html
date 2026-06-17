@@ -213,7 +213,8 @@ async function analisar() {
   document.getElementById('ia-resp').innerHTML =
     '<div class="ia-loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
   document.getElementById('btn2').disabled = true;
-
+console.log('token:', tok);
+console.log('problema:', prob);
   try {
     var r = await fetch('/api/ai/chat',{
       method: 'POST',
