@@ -173,6 +173,26 @@ console.log('user:', user);
 var diag = '', dataSel = null, horaSel = null, ocupados = {};
 var calData = new Date();
 
+function mostrarSucesso() {
+  var s=document.getElementById('success');
+  s.style.cssText='display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);padding:40px 24px;';
+  document.getElementById('stxt').textContent='Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
+}
+
+if(localStorage.getItem('drm_agendado')==='1'){
+  localStorage.removeItem('drm_agendado');
+  mostrarSucesso();
+}
+
+document.addEventListener('visibilitychange', function(){
+  if(document.visibilityState==='visible'){
+    if(localStorage.getItem('drm_agendado')==='1'){
+      localStorage.removeItem('drm_agendado');
+      mostrarSucesso();
+    }
+  }
+});
+
 // ── Troca de step ────────────────────────────────────────────
 function goStep(n) {
   // Cards: closed = só título, open = expande
@@ -271,7 +291,7 @@ async function concordar() {
 
 async function carregarOcupados() {
   try {
-    var r = await fetch('/api/agendamentos',{headers:{'Authorization':'Bearer '+tok}});
+    var r = await fetch('https://drmecanico-backend-2.onrender.com/api/agendamentos',{headers:{'Authorization':'Bearer '+tok}});
     var ags = await r.json();
     ocupados = {};
     ags.forEach(function(ag){
@@ -339,17 +359,23 @@ async function confirmar() {
   var nome=user?user.name:'Cliente';
 
   try {
-    await fetch('/api/agendamentos',{
+    var resp=await fetch('https://drmecanico-backend-2.onrender.com/api/agendamentos',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+tok},
       body:JSON.stringify({tipo:prob.substring(0,60),descricao:prob+'\n\nIA:\n'+diag,data:dataSel,hora:horaSel})
     });
-    var msg=encodeURIComponent('🔧 *AGENDAMENTO - dr Mecânico*\n\n👤 '+nome+'\n📅 '+dataSel+' às '+horaSel+'\n\n🚗 '+prob+'\n\n🤖 IA:\n'+diag);
-    window.open('https://wa.me/'+MECANICO_WPP+'?text='+msg,'_blank');
+    var result=await resp.json();
 
-    document.getElementById('cards').style.display='none';
-    var s=document.getElementById('success'); s.style.display='flex';
-    document.getElementById('stxt').textContent='Agendado para '+dataSel+' às '+horaSel+'. Mecânico notificado!';
+    var dataSalva=dataSel, horaSalva=horaSel;
+    dataSel=null; horaSel=null; renderCal();
+
+    if(!result.zapiOk){
+      localStorage.setItem('drm_agendado','1');
+      var msg=encodeURIComponent('🔧 *AGENDAMENTO - dr Mecânico*\n\n👤 '+nome+'\n📅 '+dataSalva+' às '+horaSalva+'\n\n🚗 '+prob+'\n\n🤖 IA:\n'+diag);
+      window.location.href='https://wa.me/'+MECANICO_WPP+'?text='+msg;
+    } else {
+      mostrarSucesso();
+    }
   } catch(e){
     alert('Erro ao agendar.'); btn.disabled=false; btn.innerHTML='📅 Confirmar';
   }
