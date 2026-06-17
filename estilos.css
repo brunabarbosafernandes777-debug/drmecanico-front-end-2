@@ -1,9 +1,13 @@
 :root {
-    color-scheme: light only ;
+    color-scheme: light only  !important;
 }
 
 
-
+/* Impede o Samsung Internet de inverter cores */
+html {
+  -webkit-filter: none !important;
+  filter: none !important;
+}
 @font-face {
     font-family: 'Gadugi';
     src: url('./fonts/gadugi-bold.ttf') format('truetype');
