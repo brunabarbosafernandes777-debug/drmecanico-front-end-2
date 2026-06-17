@@ -215,7 +215,7 @@ async function analisar() {
   document.getElementById('btn2').disabled = true;
 
   try {
-    var r = await fetch('/api/ai/chat', {
+    var r = await fetch('/api/ai/chat',{
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok },
       body: JSON.stringify({
