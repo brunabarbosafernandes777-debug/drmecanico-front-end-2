@@ -365,7 +365,7 @@ transform:translateY(-0.5px);
 .btn-fin:disabled { opacity:0.5; cursor:not-allowed; }
 
 /* Floating nav */
-.float-nav { position:absolute; bottom:6px; left:14px; display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.95); border-radius:20px; padding:6px 12px; box-shadow:0 2px 12px rgba(0,0,0,0.12); z-index:5; }
+.float-nav { position:absolute; bottom:6px; left:14px; display:flex; align-items:center; gap:10px; background: #4745F1; border-radius:20px; padding:6px 12px; box-shadow:0 2px 12px rgba(0,0,0,0.12); z-index:5; }
 .fnav-dots { display:flex; gap:8px; align-items:center; }
 .fdot { font-size:14px; color:#ccc; font-weight:700; }
 .fdot.active { font-size:17px; font-weight:900; }
@@ -374,7 +374,7 @@ transform:translateY(-0.5px);
 .float-nav-sky    .fdot.active { color:#00AFEF; }
 .float-nav-orange .fdot.active { color:#FE7213; }
 .fnav-arrow { background:none; border:none; font-size:20px; cursor:pointer; padding:0 4px; line-height:1; }
-.float-nav-purple .fnav-arrow { color:#4745F1; }
+.float-nav-purple .fnav-arrow { color:white; }
 .float-nav-sky    .fnav-arrow { color:#00AFEF; }
 .fnav-arrow:disabled { color:#ddd; cursor:not-allowed; }
 
