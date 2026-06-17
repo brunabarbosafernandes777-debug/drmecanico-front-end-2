@@ -33,7 +33,8 @@ html, body{
 }
 
 body{
-    background:white;
+    background-color:white;
+    background-color: #ffffff !important;
 }
 
 .page{
@@ -41,7 +42,8 @@ body{
     max-width:705px;
     position:relative;
    /* height:100%;*/
-   background:white;
+   background-color:white;
+   background-color: #ffffff !important;
     display:flex;
     flex-direction:column;
     padding-bottom:110px;
@@ -53,7 +55,7 @@ body{
 
  
  .page-wrap 
- { position:relative; width:100%; max-width:480px; overflow:hidden; padding-bottom:110px; background: white;}
+ { position:relative; width:100%; max-width:480px; overflow:hidden; padding-bottom:110px; background-color: white; background-color: #ffffff !important;}
  .base,
 .overlay-svg {
     width:100%;
@@ -79,7 +81,8 @@ body{
     flex-direction:column;
     align-items:flex-start;
     gap:6px;
-    background:white;
+    background-color:white;
+    background-color: #ffffff !important;
 }
 
 
@@ -92,7 +95,8 @@ transform: translateY(-0.5px);
     margin-top:0px;
 top:0px;
 left:-4px;
-background: white;
+background-color: white;
+background-color: #ffffff !important;
 
 }
     
@@ -284,7 +288,8 @@ transform:translateY(-0.5px);
     border: 1px solid #e8e8e8;
     font-size: 13px;
     cursor: pointer;
-    background: white;
+    background-color: white;
+    background-color: #ffffff !important;
 }
 
 .day:disabled { color: #ddd; border-color: #f0f0f0; cursor: not-allowed; }
@@ -305,7 +310,8 @@ transform:translateY(-0.5px);
     font-size: 13px;
     font-weight: 700;
     cursor: pointer;
-    background: white;
+    background-color: white;
+    background-color: #ffffff !important;
     color: #4745F1;
 }
 
@@ -313,7 +319,8 @@ transform:translateY(-0.5px);
 .slot.taken { border-color: #ddd; color: #ddd; cursor: not-allowed; }
 /* White box — no radius, fills card completely */
 .white-box {
-  background:white;
+  background-color:white;
+  background-color: #ffffff !important;
   border-radius:0;
   flex:1;
   position:relative;
@@ -574,11 +581,13 @@ transform:translateY(-0.5px);
 
 .topo{
 
-    background: white;
+    background-color: white;
+    background-color: #ffffff !important;
 }
  .base{
 
-    background: white;
+    background-color: white;
+    background-color: #ffffff !important;
  }
 .bottom-nav {
   position: fixed !important;
@@ -621,7 +630,7 @@ transform:translateY(-0.5px);
 
 
 .white-box{
-    background:white;
+    background-color:white !important;
 }
 
    
