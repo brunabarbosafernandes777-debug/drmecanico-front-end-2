@@ -95,8 +95,8 @@ body{
   <div class="cards" id="cards">
 
     <!-- CARD 1 -->
-    <div class="card card-1 open" id="c1">
-      <div class="card-title" onclick="trocar(1)">Dados pessoais e do veículo</div>
+    <div class="card card-1 open" id="c1" onclick="trocar(1)" >
+      <div class="card-title" >Dados pessoais e do veículo</div>
       <div class="card-body" id="b1">
         <div class="white-box">
           <div class="inner-scroll">
@@ -134,7 +134,7 @@ body{
           </div>
           <div class="fg">
             <label>📷 Foto do veículo *</label>
-            <div style="border:1.5px dashed #e0e0e0;border-radius:10px;padding:12px;text-align:center;cursor:pointer;background:#fafafa" onclick="document.getElementById('foto-input').click()">
+            <div style="border:1.5px dashed #e0e0e0;border-radius:10px;padding:12px;text-align:center;cursor:pointer;background:#fafafa" onclick="document.getElementById('foto-input').click()" onclick="event.stopPropagation(); document.getElementById('foto-input').click()">
               <div id="foto-preview" style="display:none;margin-bottom:8px"><img id="foto-img" style="max-width:100%;max-height:120px;border-radius:8px;object-fit:cover"></div>
               <div id="foto-placeholder"><div style="font-size:28px;margin-bottom:4px">📷</div><div style="font-size:12px;color:#aaa">Toque para tirar foto do veículo</div></div>
             </div>
@@ -142,7 +142,7 @@ body{
           </div>
           <div class="fg">
             <label>📷 Foto do hodômetro (km) *</label>
-            <div style="border:1.5px dashed #e0e0e0;border-radius:10px;padding:12px;text-align:center;cursor:pointer;background:#fafafa" onclick="document.getElementById('hodo-input').click()">
+            <div style="border:1.5px dashed #e0e0e0;border-radius:10px;padding:12px;text-align:center;cursor:pointer;background:#fafafa" onclick="document.getElementById('hodo-input').click()"onclick="event.stopPropagation(); document.getElementById('hodo-input').click()">
               <div id="hodo-preview" style="display:none;margin-bottom:8px"><img id="hodo-img" style="max-width:100%;max-height:120px;border-radius:8px;object-fit:cover"></div>
               <div id="hodo-placeholder"><div style="font-size:28px;margin-bottom:4px">🔢</div><div style="font-size:12px;color:#aaa">Foto do painel com a quilometragem</div></div>
             </div>
@@ -191,7 +191,7 @@ body{
           <div class="float-nav float-nav-sky">
            
             <button class="fnav-arrow" id="fnav-arrow2" onclick="irStep(3)" disabled>&#9654;</button>
-        </div>  </div>
+        </div>  
         
       </div>
     </div>
