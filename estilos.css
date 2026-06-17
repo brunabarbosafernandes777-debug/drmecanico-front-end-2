@@ -27,7 +27,8 @@
 }
 
 html, body{
- 
+   background-color: #ffffff !important;
+    color: #000000 !important;
     height:100%;
     overflow:visible;
 }
@@ -102,15 +103,11 @@ background-color: #ffffff !important;
 }
     
 
-html, body {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-}
 
 @media (prefers-color-scheme: dark) {
     html, body {
         background-color: #ffffff !important;
-        color: #000000 !important;
+        color: #ffffff !important;
     }
 }
 
