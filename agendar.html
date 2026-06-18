@@ -378,11 +378,15 @@ function mostrarSucesso() {
 }
 
 function mostrarFalha() {
-  var s=document.getElementById('success');
-  s.style.cssText='display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);padding:40px 24px;';
-  s.querySelector('.emj').style.display = 'none';
-  s.querySelector('h2').textContent = 'Ops!';
-  document.getElementById('stxt').textContent='Agendamento falhou. Tente novamente.';
+  alert('Agendamento falhou. Tente novamente.');
+}
+
+function cancelarRedirecionamento() {
+  document.getElementById('confirmModal').style.display = 'none';
+  mostrarFalha();
+  var btn=document.getElementById('btn3');
+  btn.disabled=false;
+  btn.innerHTML='📅 Confirmar';
 }
 
 function cancelarRedirecionamento() {
