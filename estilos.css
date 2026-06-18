@@ -112,7 +112,7 @@ background-color: #ffffff !important;
 /* Cards */
 .cards{
     flex:1;
-    position:absolute;
+   
     display:flex;
     flex-direction:column;
     padding:0 38px 30px;
@@ -126,6 +126,9 @@ background-color: #ffffff !important;
     left: 50%;
     transform: translateX(-50%);
     width:102.935%;
+    position:relative;
+transform:translateY(102px);
+margin-bottom:102px;
  
 
 }
