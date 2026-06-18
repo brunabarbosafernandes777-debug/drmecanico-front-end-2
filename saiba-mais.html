@@ -88,7 +88,7 @@ body{
 </div>
 
   <div class="cards" id="cards">
-    <div id="spacer" style="height:0"></div>
+    
     <!-- CARD 1: Veículos -->
     <div class="card card-1 open" id="c1" onclick="trocar(1)">
      
@@ -220,15 +220,7 @@ function trocar(n) {
     }
   });
   current = n;
-} function ajustarSpacer() {
-  var cards = document.getElementById('cards');
-  var spacer = document.getElementById('spacer');
-  if(cards && spacer) {
-    spacer.style.height = (cards.offsetTop + cards.offsetHeight) + 'px';
-  }
 }
-window.addEventListener('load', ajustarSpacer);
-window.addEventListener('resize', ajustarSpacer);
 </script>
 </body>
 </html>
