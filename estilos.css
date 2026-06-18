@@ -54,9 +54,11 @@ body{
     padding-bottom:110px;
     box-sizing :border-box;
     /*overflow:visible !important; */
-  overflow-y:auto !important;
+ 
     min-height:739px;
     margin:0 auto;
+    overflow-y: auto !important;
+height: 100vh;
 }
 
  
@@ -126,7 +128,7 @@ background-color: #ffffff !important;
     left: 50%;
     transform: translateX(-50%);
     width:102.935%;
- 
+ padding-bottom: 200px;
 
 }
 .btn-comprar {
