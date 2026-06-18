@@ -57,6 +57,9 @@ body{
   overflow-y:auto !important;
     min-height:739px;
     margin:0 auto;
+  
+
+height:auto;
 }
 
  
@@ -112,7 +115,7 @@ background-color: #ffffff !important;
 /* Cards */
 .cards{
     flex:1;
-    position:absolute;
+    position:relative;
     display:flex;
     flex-direction:column;
     padding:0 38px 30px;
@@ -126,6 +129,7 @@ background-color: #ffffff !important;
     left: 50%;
     transform: translateX(-50%);
     width:102.935%;
+    height:auto;
  
 
 }
