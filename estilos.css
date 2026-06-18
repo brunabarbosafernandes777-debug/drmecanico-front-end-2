@@ -53,7 +53,7 @@ body{
     padding-bottom:110px;
     box-sizing :border-box;
     /*overflow:visible !important; */
-  
+  overflow:hidden !important;
     min-height:739px;
     margin:0 auto;
 }
