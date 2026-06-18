@@ -54,7 +54,7 @@ body{
     padding-bottom:110px;
     box-sizing :border-box;
     /*overflow:visible !important; */
- 
+ overflow-x: hidden;
     min-height:739px;
     margin:0 auto;
     overflow-y: auto !important;
