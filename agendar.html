@@ -76,6 +76,12 @@ body{
     <p id="stxt">Seu agendamento foi confirmado!</p>
     <a class="btn-back" href="/cliente.html">Voltar ao início</a>
   </div>
+  <div id="erroBox" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;">
+  <div style="font-size:64px;margin-bottom:14px;">😕</div>
+  <h2 style="font-size:22px;font-weight:900;color:#3E4095;margin-bottom:8px;">Ops!</h2>
+  <p style="color:#888;font-size:14px;line-height:1.6;margin-bottom:16px;">Agendamento falhou. Tente novamente.</p>
+  <button onclick="fecharErro()" style="padding:13px 32px;background:#3E4095;color:white;border:none;border-radius:30px;font-size:15px;font-weight:900;cursor:pointer;">Voltar</button>
+</div>
   <div id="confirmModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;align-items:center;justify-content:center;">
   <div style="background:white;border-radius:16px;padding:24px;max-width:320px;text-align:center;">
     <p style="font-weight:900;color:#3E4095;margin-bottom:8px;">Você está saindo do nosso app</p>
@@ -377,13 +383,8 @@ function mostrarSucesso() {
   document.getElementById('stxt').textContent='Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
 }
 
-function mostrarFalha() {
-  alert('Agendamento falhou. Tente novamente.');
-}
-
-function cancelarRedirecionamento() {
-  document.getElementById('confirmModal').style.display = 'none';
-  mostrarFalha();
+function fecharErro() {
+  document.getElementById('erroBox').style.display = 'none';
   var btn=document.getElementById('btn3');
   btn.disabled=false;
   btn.innerHTML='📅 Confirmar';
@@ -391,7 +392,15 @@ function cancelarRedirecionamento() {
 
 function cancelarRedirecionamento() {
   document.getElementById('confirmModal').style.display = 'none';
-  mostrarFalha();
+  document.getElementById('erroBox').style.display = 'flex';
+}
+
+function confirmarRedirecionamento() {
+  document.getElementById('confirmModal').style.display = 'none';
+  if(dadosAgendamentoPendente){
+    localStorage.setItem('drm_agendado','1');
+    window.location.href = dadosAgendamentoPendente;
+  }
 }
 
 function confirmarRedirecionamento() {
