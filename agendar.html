@@ -361,11 +361,7 @@ async function confirmar() {
   document.getElementById('confirmModal').style.display = 'flex';
 } else {
   mostrarSucesso();
-  var msg=encodeURIComponent('🔧 *AGENDAMENTO - dr Mecânico*\n\n👤 '+nome+'\n📅 '+dataSalva+' às '+horaSalva+'\n\n🚗 '+prob+'\n\n🤖 IA:\n'+diag);
-  dadosAgendamentoPendente = 'https://wa.me/'+MECANICO_WPP+'?text='+msg;
-  document.getElementById('confirmModal').style.display = 'flex';
-} else {
-  mostrarSucesso();
+ 
 function mostrarSucesso() {
   var s=document.getElementById('success');
   s.style.cssText='display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);padding:40px 24px;';
