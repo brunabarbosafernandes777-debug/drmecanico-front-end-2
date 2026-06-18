@@ -126,7 +126,7 @@ background-color: #ffffff !important;
     left: 50%;
     transform: translateX(-50%);
     width:102.935%;
-    position:relative;
+    position:absolute;
 transform:translateY(102px);
 margin-bottom:102px;
  
