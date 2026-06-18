@@ -420,7 +420,9 @@ transform:translateY(-0.5px);
 /* Card laranja - sempre com radius embaixo */
 
 
-
+.s-title, .s-sub, .s-sub.s-nao {
+    font-weight:bold;
+}
 
 
 
