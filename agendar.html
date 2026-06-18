@@ -356,12 +356,19 @@ async function confirmar() {
     dataSel=null; horaSel=null; renderCal();
 
     if(!result.zapiOk){
-  var msg=encodeURIComponent('🔧 *AGENDAMENTO - dr Mecânico*\n\n👤 '+nome+'\n📅 '+dataSalva+' às '+horaSalva+'\n\n🚗 '+prob+'\n\n🤖 IA:\n'+diag);
-  dadosAgendamentoPendente = 'https://wa.me/'+MECANICO_WPP+'?text='+msg;
-  document.getElementById('confirmModal').style.display = 'flex';
-} else {
-  mostrarSucesso();
- 
+      var msg=encodeURIComponent('🔧 *AGENDAMENTO - dr Mecânico*\n\n👤 '+nome+'\n📅 '+dataSalva+' às '+horaSalva+'\n\n🚗 '+prob+'\n\n🤖 IA:\n'+diag);
+      dadosAgendamentoPendente = 'https://wa.me/'+MECANICO_WPP+'?text='+msg;
+      document.getElementById('confirmModal').style.display = 'flex';
+    } else {
+      mostrarSucesso();
+    }
+  } catch(e){
+    alert('Erro ao agendar.'); btn.disabled=false; btn.innerHTML='📅 Confirmar';
+  }
+}
+
+var dadosAgendamentoPendente = null;
+
 function mostrarSucesso() {
   var s=document.getElementById('success');
   s.style.cssText='display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);padding:40px 24px;';
@@ -369,6 +376,7 @@ function mostrarSucesso() {
   s.querySelector('h2').textContent = 'Agendado!';
   document.getElementById('stxt').textContent='Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
 }
+
 function mostrarFalha() {
   var s=document.getElementById('success');
   s.style.cssText='display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);padding:40px 24px;';
@@ -376,13 +384,6 @@ function mostrarFalha() {
   s.querySelector('h2').textContent = 'Ops!';
   document.getElementById('stxt').textContent='Agendamento falhou. Tente novamente.';
 }
-  } catch(e){
-    alert('Erro ao agendar.'); btn.disabled=false; btn.innerHTML='📅 Confirmar';
-  }
-
-
-
-} var dadosAgendamentoPendente = null;
 
 function cancelarRedirecionamento() {
   document.getElementById('confirmModal').style.display = 'none';
@@ -395,12 +396,6 @@ function confirmarRedirecionamento() {
     localStorage.setItem('drm_agendado','1');
     window.location.href = dadosAgendamentoPendente;
   }
-}
-
-function mostrarFalha() {
-  var s=document.getElementById('success');
-  s.style.cssText='display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);padding:40px 24px;';
-  document.getElementById('stxt').textContent='Agendamento falhou. Tente novamente.';
 }
 </script>
 </body>
