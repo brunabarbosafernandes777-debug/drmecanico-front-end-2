@@ -635,8 +635,8 @@ background: rgba(60, 60, 60, 0.70); /* ou a cor do seu app */
   justify-content:center;
   text-decoration:none;
   color:white;
+  height:100%;
 }
-
 
 .white-box{
     background-color:white !important;
