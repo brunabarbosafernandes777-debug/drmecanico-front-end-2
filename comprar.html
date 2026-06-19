@@ -476,18 +476,20 @@ async function finalizar() {
   var c1val=document.getElementById('c1val').value.trim();
   var c1cvv=document.getElementById('c1cvv').value.trim();
   if(!c1num||c1num.length<15||!c1nome||!c1val||!c1cvv){ showErr('err3','Preencha todos os campos do cartão 1.'); return; }
-
+await fetch('/api/auth/register',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ name:payload.cliente.nome, email:payload.cliente.email, password:senha, phone:payload.cliente.tel, cpf:payload.cliente.cpf, veiculo:{ placa:payload.cliente.placa, modelo:payload.cliente.modelo, ano:payload.cliente.ano, cor:payload.cliente.cor } }) });
   var payload={
-    cliente:{
-      nome:document.getElementById('nome').value.trim(),
-      email:document.getElementById('email').value.trim(),
-      tel:document.getElementById('tel').value.trim(),
-      cpf:document.getElementById('cpf').value.trim(),
-      placa:document.getElementById('placa').value.trim(),
-      modelo:document.getElementById('modelo').value.trim(),
-      ano:document.getElementById('ano').value.trim(),
-      cor:document.getElementById('cor').value.trim()
-    },
+  cliente:{
+    nome:document.getElementById('nome').value.trim(),
+    email:document.getElementById('email').value.trim(),
+    tel:document.getElementById('tel').value.trim(),
+    cpf:document.getElementById('cpf').value.trim(),
+    placa:document.getElementById('placa').value.trim(),
+    modelo:document.getElementById('modelo').value.trim(),
+    ano:document.getElementById('ano').value.trim(),
+    cor:document.getElementById('cor').value.trim(),
+    fotoVeiculo:urlFotoVeiculo,
+    fotoHodometro:urlFotoHodometro
+  },
     total:TOTAL,
     pagamentos:[{ valor:dois?parseFloat(document.getElementById('valor-c1').value):TOTAL, numero:c1num, nome:c1nome, validade:c1val, cvv:c1cvv, parcelas:parseInt(document.getElementById('c1parc').value) }]
   };
