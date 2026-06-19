@@ -506,22 +506,7 @@ async function finalizar() {
     total:TOTAL,
     pagamentos:[{ valor:dois?parseFloat(document.getElementById('valor-c1').value):TOTAL, numero:c1num, nome:c1nome, validade:c1val, cvv:c1cvv, parcelas:parseInt(document.getElementById('c1parc').value) }]
   };
-await fetch('https://drmecanico-backend-2.onrender.com/api/auth/register',{
-  method:'POST',
-  headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({
-    name:payload.cliente.nome,
-    email:payload.cliente.email,
-    password:senha,
-    phone:payload.cliente.tel,
-    cpf:payload.cliente.cpf,
-    veiculo:{ placa:payload.cliente.placa, modelo:payload.cliente.modelo, ano:payload.cliente.ano, cor:payload.cliente.cor },
-    fotoVeiculo:urlFotoVeiculo,
-    fotoHodometro:urlFotoHodometro,
-    aceitouTermos:document.getElementById('check-termos').checked,
-    aceitouNaoSeguradora:document.getElementById('check-seguradora').checked
-  })
-});
+
   if(dois) {
     var v1=parseFloat(document.getElementById('valor-c1').value)||0;
     if(v1<=0||v1>=TOTAL){ showErr('err3','Valor do cartão 1 inválido.'); return; }
@@ -544,8 +529,22 @@ await fetch('https://drmecanico-backend-2.onrender.com/api/auth/register',{
 
     btn.innerHTML='<span class="spin"></span> Ativando conta...';
     var senha=gerarSenha();
-    await fetch('/api/auth/register',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ name:payload.cliente.nome, email:payload.cliente.email, password:senha, phone:payload.cliente.tel, cpf:payload.cliente.cpf, veiculo:{ placa:payload.cliente.placa, modelo:payload.cliente.modelo, ano:payload.cliente.ano, cor:payload.cliente.cor } }) });
-
+    await fetch('https://drmecanico-backend-2.onrender.com/api/auth/register',{
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({
+    name:payload.cliente.nome,
+    email:payload.cliente.email,
+    password:senha,
+    phone:payload.cliente.tel,
+    cpf:payload.cliente.cpf,
+    veiculo:{ placa:payload.cliente.placa, modelo:payload.cliente.modelo, ano:payload.cliente.ano, cor:payload.cliente.cor },
+    fotoVeiculo:urlFotoVeiculo,
+    fotoHodometro:urlFotoHodometro,
+    aceitouTermos:document.getElementById('check-termos').checked,
+    aceitouNaoSeguradora:document.getElementById('check-seguradora').checked
+  })
+});
     document.getElementById('cards').style.display='none';
     var s=document.getElementById('success'); s.style.display='flex';
     document.getElementById('success-nome').textContent=payload.cliente.nome.split(' ')[0];
