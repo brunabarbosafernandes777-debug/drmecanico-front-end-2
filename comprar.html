@@ -392,11 +392,35 @@ function checkUber() {
   document.getElementById('uber-err').style.display=v==='sim'?'block':'none';
 }
 
-function previewFoto(input,tipo) {
+var urlFotoVeiculo = '';
+var urlFotoHodometro = '';
+
+async function previewFoto(input,tipo) {
   if(!input.files||!input.files[0]) return;
+
   var r=new FileReader();
   r.onload=function(e){ document.getElementById(tipo+'-img').src=e.target.result; document.getElementById(tipo+'-preview').style.display='block'; document.getElementById(tipo+'-placeholder').style.display='none'; };
   r.readAsDataURL(input.files[0]);
+
+  // Envia pro Cloudinary
+  var formData = new FormData();
+  formData.append('foto', input.files[0]);
+
+  try {
+    var resp = await fetch('https://drmecanico-backend-2.onrender.com/api/upload', {
+      method: 'POST',
+      body: formData
+    });
+    var data = await resp.json();
+    if(data.url) {
+      if(tipo === 'foto') urlFotoVeiculo = data.url;
+      if(tipo === 'hodo') urlFotoHodometro = data.url;
+    }
+  } catch(e) {
+    console.error('Erro no upload da foto:', e);
+  }
+
+  checarCamposRevisaoManual();
 }
 
 function toggleDoisCartoes() {
