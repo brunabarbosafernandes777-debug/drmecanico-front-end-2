@@ -395,12 +395,14 @@ async function confirmar() {
     var dataSalva=dataSel, horaSalva=horaSel;
 
     if(!result.zapiOk){
-      dataSel=null; horaSel=null; renderCal();   // só zera aqui, indo pro WhatsApp confirmar
+      dadosAgendamentoPendentePayload = result.pendente;   // NOVO: guarda pra mandar no confirmar-manual
+
+      dataSel=null; horaSel=null; renderCal();
       var msg=encodeURIComponent('🔧 *AGENDAMENTO - dr Mecânico*\n\n👤 '+nome+'\n📅 '+dataSalva+' às '+horaSalva+'\n\n🚗 '+prob+'\n\n🤖 IA:\n'+diag);
       dadosAgendamentoPendente = 'https://wa.me/'+MECANICO_WPP+'?text='+msg;
       document.getElementById('confirmModal').style.display = 'flex';
     } else {
-      dataSel=null; horaSel=null; renderCal();   // sucesso, agora sim zera
+      dataSel=null; horaSel=null; renderCal();
       document.getElementById('cal-grid').parentElement.style.display = 'none';
       document.getElementById('btn3').style.display = 'none';
       var s = document.getElementById('success');
@@ -408,7 +410,6 @@ async function confirmar() {
       document.getElementById('stxt').textContent = 'Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
     }
   } catch(e){
-    // NÃO zera dataSel/horaSel aqui — mantém a seleção do usuário
     document.getElementById('cal-grid').parentElement.style.display = 'none';
     document.getElementById('btn3').style.display = 'none';
     document.getElementById('erroBox').style.display = 'block';
@@ -416,27 +417,38 @@ async function confirmar() {
     btn.innerHTML='📅 Confirmar';
   }
 }
-
 var dadosAgendamentoPendente = null;
+var dadosAgendamentoPendentePayload = null;   // NOVO: guarda os dados pra confirmar-manual
 
 function fecharErro() {
   document.getElementById('erroBox').style.display = 'none';
-  document.getElementById('cal-grid').parentElement.style.display = '';
-  document.getElementById('btn3').style.display = 'inline-block';
+  document.getElementById('cal-grid').parentElement.style.display = '';   // calendário volta a aparecer
+  document.getElementById('btn3').style.display = 'inline-block';         // botão volta a aparecer
   var btn=document.getElementById('btn3');
-  btn.disabled = !(dataSel && horaSel);  // mantém habilitado se já tinha data+hora escolhidos
-  btn.innerHTML='📅 Confirmar';
-  renderCal();      // redesenha calendário com dataSel ainda marcado
-  if(dataSel) renderSlots();  // redesenha horários com horaSel ainda marcado
+  btn.disabled = !(dataSel && horaSel);
+  btn.innerHTML='📅 Confirmar';   // texto do botão volta ao normal, sem spinner
+  renderCal();
+  if(dataSel) renderSlots();
 }
 function cancelarRedirecionamento() {
   document.getElementById('confirmModal').style.display = 'none';
+  document.getElementById('cal-grid').parentElement.style.display = 'none';
+  document.getElementById('btn3').style.display = 'none';
   document.getElementById('erroBox').style.display = 'block';
 }
 
-function confirmarRedirecionamento() {
+async function confirmarRedirecionamento() {
   document.getElementById('confirmModal').style.display = 'none';
-  if(dadosAgendamentoPendente){
+  if(dadosAgendamentoPendente && dadosAgendamentoPendentePayload){
+    try {
+      await fetch('https://drmecanico-backend-2.onrender.com/api/agendamentos/confirmar-manual',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+tok},
+        body: JSON.stringify(dadosAgendamentoPendentePayload)
+      });
+    } catch(e) {
+      // se falhar aqui, ainda assim deixa ir pro WhatsApp, mas idealmente avisar o usuário
+    }
     localStorage.setItem('drm_agendado','1');
     window.location.href = dadosAgendamentoPendente;
   }
