@@ -479,7 +479,26 @@ function gerarSenha() {
   var c='ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
   var s=''; for(var i=0;i<8;i++) s+=c[Math.floor(Math.random()*c.length)]; return s;
 }
+function checarCamposRevisaoManual() {
+  var nome=document.getElementById('nome')?.value.trim();
+  var email=document.getElementById('email')?.value.trim();
+  var tel=document.getElementById('tel')?.value.trim();
+  var cpf=document.getElementById('cpf')?.value.trim();
+  var placa=document.getElementById('placa')?.value.trim();
+  var modeloManual=document.getElementById('modelo-manual-input')?.value.trim();
 
+  var temFoto=document.getElementById('foto-input')?.files.length > 0;
+  var temHodo=document.getElementById('hodo-input')?.files.length > 0;
+
+  var btn = document.getElementById('btn-revisao-manual');
+  if(!btn) return;
+
+  if(nome && email && tel && cpf && placa && modeloManual && temFoto && temHodo){
+    btn.disabled = false;
+  } else {
+    btn.disabled = true;
+  }
+}
 async function finalizar() {
   showErr('err3','');
   if(!document.getElementById('check-seguradora').checked){
