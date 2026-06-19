@@ -345,7 +345,8 @@ function validar1() {
 }
 
 function validarTermo() {
-  if(!document.getElementById('aceito').checked){ alert('Aceite os termos para continuar.'); return false; }
+  if(!document.getElementById('check-seguradora').checked){ alert('Marque que entende as condições do serviço.'); return false; }
+  if(!document.getElementById('check-termos').checked){ alert('Aceite os Termos de Uso e a Política de Privacidade.'); return false; }
   return true;
 }
 
