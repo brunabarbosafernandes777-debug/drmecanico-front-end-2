@@ -37,7 +37,7 @@ html, body{
 }
 
 body{
-    background-color:white;
+    
     background-color: #ffffff !important;
 }
 
@@ -60,7 +60,7 @@ body{
 
  
  .page-wrap 
- { position:relative; width:100%; max-width:480px; overflow:hidden; padding-bottom:110px; background-color: white; background-color: #ffffff !important;}
+ { position:relative; width:100%; max-width:480px; overflow:hidden; padding-bottom:110px; }
  .base,
 .overlay-svg {
     width:100%;
