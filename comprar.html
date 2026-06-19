@@ -351,9 +351,26 @@ function validarTermo() {
 }
 
 function toggleAceito() {
-  var ok=document.getElementById('aceito').checked;
-  var a=document.getElementById('fnav-arrow2'); if(a) a.disabled=!ok;
+  var ok = document.getElementById('check-seguradora').checked && 
+           document.getElementById('check-termos').checked;
+  var a = document.getElementById('fnav-arrow2');
+  if(a) a.disabled = !ok;
 }
+
+function checkTermosEnabled() {
+  var ok1 = document.getElementById('check-seguradora').checked;
+  var ok2 = document.getElementById('check-termos').checked;
+  var btn = document.getElementById('fnav-arrow2');
+  if(btn) btn.disabled = !(ok1 && ok2);
+}
+
+// Habilitar botão quando checkboxes forem marcados
+document.getElementById('check-seguradora').addEventListener('change', function() {
+  checkTermosEnabled();
+});
+document.getElementById('check-termos').addEventListener('change', function() {
+  checkTermosEnabled();
+});
 
 function validarCarro() {
   var modelo=document.getElementById('modelo').value.trim().toLowerCase();
