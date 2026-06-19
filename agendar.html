@@ -393,23 +393,22 @@ async function confirmar() {
     var result=await resp.json();
 
     var dataSalva=dataSel, horaSalva=horaSel;
-    dataSel=null; horaSel=null; renderCal();
 
     if(!result.zapiOk){
+      dataSel=null; horaSel=null; renderCal();   // só zera aqui, indo pro WhatsApp confirmar
       var msg=encodeURIComponent('🔧 *AGENDAMENTO - dr Mecânico*\n\n👤 '+nome+'\n📅 '+dataSalva+' às '+horaSalva+'\n\n🚗 '+prob+'\n\n🤖 IA:\n'+diag);
       dadosAgendamentoPendente = 'https://wa.me/'+MECANICO_WPP+'?text='+msg;
       document.getElementById('confirmModal').style.display = 'flex';
     } else {
-      // SUCESSO NO CARD 3
+      dataSel=null; horaSel=null; renderCal();   // sucesso, agora sim zera
       document.getElementById('cal-grid').parentElement.style.display = 'none';
       document.getElementById('btn3').style.display = 'none';
-      
       var s = document.getElementById('success');
       s.style.display = 'block';
       document.getElementById('stxt').textContent = 'Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
     }
   } catch(e){
-    // ERRO NO CARD 3
+    // NÃO zera dataSel/horaSel aqui — mantém a seleção do usuário
     document.getElementById('cal-grid').parentElement.style.display = 'none';
     document.getElementById('btn3').style.display = 'none';
     document.getElementById('erroBox').style.display = 'block';
@@ -422,13 +421,14 @@ var dadosAgendamentoPendente = null;
 
 function fecharErro() {
   document.getElementById('erroBox').style.display = 'none';
-  document.getElementById('cal-grid').parentElement.style.display = 'flex';
+  document.getElementById('cal-grid').parentElement.style.display = '';
   document.getElementById('btn3').style.display = 'inline-block';
   var btn=document.getElementById('btn3');
-  btn.disabled=false;
+  btn.disabled = !(dataSel && horaSel);  // mantém habilitado se já tinha data+hora escolhidos
   btn.innerHTML='📅 Confirmar';
+  renderCal();      // redesenha calendário com dataSel ainda marcado
+  if(dataSel) renderSlots();  // redesenha horários com horaSel ainda marcado
 }
-
 function cancelarRedirecionamento() {
   document.getElementById('confirmModal').style.display = 'none';
   document.getElementById('erroBox').style.display = 'block';
