@@ -29,7 +29,7 @@ body{
 overflow:hidden !important;
 }
 
-/* NOVO CSS PARA O SUCCESS - dentro do card, background branco com opacity, sem borda */
+/* CSS NOVO PARA O SUCCESS - dentro do card, background branco com opacity, sem borda */
 .success {
   display: none;
   background: rgba(255, 255, 255, 0.98);
@@ -65,6 +65,38 @@ overflow:hidden !important;
   font-weight: 700;
   font-size: 14px;
 }
+
+/* CSS NOVO PARA O ERROBOX - dentro do card, background branco com opacity, sem borda */
+#erroBox {
+  display: none;
+  background: rgba(255, 255, 255, 0.98);
+  padding: 24px;
+  margin: 16px 0;
+  text-align: center;
+  border-radius: 12px;
+}
+
+#erroBox h2 {
+  font-size: 20px;
+  color: #3E4095;
+  margin-bottom: 12px;
+}
+
+#erroBox p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+#erroBox button {
+  background: #3E4095;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
 </style>
 </head>
 
@@ -78,23 +110,16 @@ overflow:hidden !important;
 
   <div class="cards" id="cards">
 
-    <div id="erroBox" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;">
-      <div style="font-size:64px;margin-bottom:14px;">😕</div>
-      <h2 style="font-size:22px;font-weight:900;color:#3E4095;margin-bottom:8px;">Ops!</h2>
-      <p style="color:#888;font-size:14px;line-height:1.6;margin-bottom:16px;">Agendamento falhou. Tente novamente.</p>
-      <button onclick="fecharErro()" style="padding:13px 32px;background:#3E4095;color:white;border:none;border-radius:30px;font-size:15px;font-weight:900;cursor:pointer;">Voltar</button>
-    </div>
-    
-    <div id="confirmModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;align-items:center;justify-content:center;">
-      <div style="background:white;border-radius:16px;padding:24px;max-width:320px;text-align:center;">
-        <p style="font-weight:900;color:#3E4095;margin-bottom:8px;">Você está saindo do nosso app</p>
-        <p style="font-size:13px;color:#666;margin-bottom:20px;">Vamos te redirecionar para o WhatsApp para confirmar seu agendamento com o mecânico. Deseja continuar?</p>
-        <div style="display:flex;gap:10px;">
-          <button onclick="cancelarRedirecionamento()" style="flex:1;padding:12px;border:none;border-radius:20px;background:#eee;font-weight:700;">Voltar</button>
-          <button onclick="confirmarRedirecionamento()" style="flex:1;padding:12px;border:none;border-radius:20px;background:#4745F1;color:white;font-weight:700;">Continuar</button>
-        </div>
+  <div id="confirmModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;align-items:center;justify-content:center;">
+    <div style="background:white;border-radius:16px;padding:24px;max-width:320px;text-align:center;">
+      <p style="font-weight:900;color:#3E4095;margin-bottom:8px;">Você está saindo do nosso app</p>
+      <p style="font-size:13px;color:#666;margin-bottom:20px;">Vamos te redirecionar para o WhatsApp para confirmar seu agendamento com o mecânico. Deseja continuar?</p>
+      <div style="display:flex;gap:10px;">
+        <button onclick="cancelarRedirecionamento()" style="flex:1;padding:12px;border:none;border-radius:20px;background:#eee;font-weight:700;">Voltar</button>
+        <button onclick="confirmarRedirecionamento()" style="flex:1;padding:12px;border:none;border-radius:20px;background:#4745F1;color:white;font-weight:700;">Continuar</button>
       </div>
     </div>
+  </div>
 
     <!-- CARD 1: Roxo -->
     <div class="card card-1 open" id="c1">
@@ -132,24 +157,32 @@ overflow:hidden !important;
       <div class="card-body" id="body3" style="display:none">
         <div class="white-box">
           <div class="inner-scroll">
-            
-            <!-- MENSAGEM DE SUCESSO MOVIDA PARA O CARD 3 - AQUI -->
-            <div class="success" id="success">
-              <div class="emj">🎉</div>
-              <h2>Agendado!</h2>
-              <p id="stxt">Seu agendamento foi confirmado!</p>
-              <a class="btn-back" href="/cliente.html">Voltar ao início</a>
+          
+          <!-- SUCESSO - DENTRO DO CARD 3 -->
+          <div class="success" id="success">
+            <div class="emj">🎉</div>
+            <h2>Agendado!</h2>
+            <p id="stxt">Seu agendamento foi confirmado!</p>
+            <a class="btn-back" href="/cliente.html">Voltar ao início</a>
+          </div>
+          
+          <!-- ERRO - DENTRO DO CARD 3 -->
+          <div id="erroBox">
+            <div style="font-size:48px;margin-bottom:14px;">😕</div>
+            <h2>Ops!</h2>
+            <p>Agendamento falhou. Tente novamente.</p>
+            <button onclick="fecharErro()">Voltar</button>
+          </div>
+          
+          <div class="cal-scroll" style="overflow:visible;padding:0">
+            <div class="cal-nav">
+              <button class="cal-btn" onclick="mesAnterior()">&#8249;</button>
+              <div class="cal-month" id="cal-month"></div>
+              <button class="cal-btn" onclick="mesProximo()">&#8250;</button>
             </div>
-            
-            <div class="cal-scroll" style="overflow:visible;padding:0">
-              <div class="cal-nav">
-                <button class="cal-btn" onclick="mesAnterior()">&#8249;</button>
-                <div class="cal-month" id="cal-month"></div>
-                <button class="cal-btn" onclick="mesProximo()">&#8250;</button>
-              </div>
-              <div class="cal-grid" id="cal-grid"></div>
-              <div class="slots" id="slots"></div>
-            </div>
+            <div class="cal-grid" id="cal-grid"></div>
+            <div class="slots" id="slots"></div>
+          </div>
           </div>
           <button class="btn-float btn-float-orange" id="btn3" onclick="confirmar()" disabled>
             📅 Confirmar
@@ -168,13 +201,42 @@ var tok  = localStorage.getItem('drm_token');
 var user = null;
 try { user = JSON.parse(localStorage.getItem('drm_user')); } catch(e){}
 if(!tok) window.location.href = '/login.html';
-console.log('token:', tok);
-console.log('user:', user);
+
 var diag = '', dataSel = null, horaSel = null, ocupados = {};
 var calData = new Date();
 
+function mostrarSucesso() {
+  var s=document.getElementById('success');
+  s.style.cssText='display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);padding:40px 24px;';
+  document.getElementById('stxt').textContent='Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
+}
 
-// ── Troca de step ────────────────────────────────────────────
+if(localStorage.getItem('drm_agendado')==='1'){
+  localStorage.removeItem('drm_agendado');
+  goStep(3);
+  document.getElementById('cal-grid').parentElement.style.display = 'none';
+  document.getElementById('btn3').style.display = 'none';
+  
+  var s = document.getElementById('success');
+  s.style.display = 'block';
+  document.getElementById('stxt').textContent = 'Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
+}
+
+document.addEventListener('visibilitychange', function(){
+  if(document.visibilityState==='visible'){
+    if(localStorage.getItem('drm_agendado')==='1'){
+      localStorage.removeItem('drm_agendado');
+      goStep(3);
+      document.getElementById('cal-grid').parentElement.style.display = 'none';
+      document.getElementById('btn3').style.display = 'none';
+      
+      var s = document.getElementById('success');
+      s.style.display = 'block';
+      document.getElementById('stxt').textContent = 'Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
+    }
+  }
+});
+
 function goStep(n) {
   var c1=document.getElementById('c1'), c2=document.getElementById('c2'), c3=document.getElementById('c3');
   var b1=document.getElementById('body1'), b2=document.getElementById('body2'), b3=document.getElementById('body3');
@@ -196,8 +258,6 @@ function goStep(n) {
   }
 }
 
-
-// ── PASSO 1 ──────────────────────────────────────────────────
 async function analisar() {
   var prob = document.getElementById('txt').value.trim();
   if(prob.length < 10) { alert('Descreva o problema com mais detalhes.'); return; }
@@ -206,13 +266,9 @@ async function analisar() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spin"></span>';
 
-  document.getElementById('ia-resp').innerHTML =
-    '<div class="ia-loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  document.getElementById('ia-resp').innerHTML = '<div class="ia-loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
   document.getElementById('btn2').disabled = true;
-  
-  console.log('token:', tok);
-  console.log('problema:', prob);
-  
+
   try {
     var r = await fetch('https://drmecanico-backend-2.onrender.com/api/ai/chat',{
       method: 'POST',
@@ -220,21 +276,17 @@ async function analisar() {
       body: JSON.stringify({
         messages: [{
           role: 'user',
-          content: 'Problema no carro do cliente: ' + prob +
-            '. Responda em 3 parágrafos: 1) diagnóstico provável, 2) serviço recomendado, 3) tempo estimado de reparo. Português simples e direto.'
+          content: 'Problema no carro do cliente: ' + prob + '. Responda em 3 parágrafos: 1) diagnóstico provável, 2) serviço recomendado, 3) tempo estimado de reparo. Português simples e direto.'
         }]
       })
     });
     
-    console.log('status:', r.status);     
     var text = await r.text();
-    console.log('resposta:', text); 
     var d = {};
     try { d = JSON.parse(text); } catch(e) {}
 
     if(!r.ok || d.error) {
-      var errMsg = d.error || ('Erro ' + r.status + ': ' + text.substring(0, 100));
-      alert('Erro da IA: ' + errMsg);
+      alert('Erro da IA: ' + (d.error || text.substring(0, 100)));
       btn.disabled = false;
       btn.innerHTML = 'OK';
       return;
@@ -259,14 +311,11 @@ async function analisar() {
   }
 }
 
-
-// ── PASSO 2 ──────────────────────────────────────────────────
 async function concordar() {
   await carregarOcupados();
   renderCal();
   goStep(3);
 }
-
 
 async function carregarOcupados() {
   try {
@@ -282,16 +331,12 @@ async function carregarOcupados() {
   } catch(e){}
 }
 
-
-// ── Calendário ───────────────────────────────────────────────
 var MESES   = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 var DIAS    = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 var HORAS   = ['08:00','09:00','10:00','11:00','14:00','15:00','16:00','17:00'];
 
-
 function mesAnterior(){ calData.setMonth(calData.getMonth()-1); renderCal(); }
 function mesProximo() { calData.setMonth(calData.getMonth()+1); renderCal(); }
-
 
 function renderCal() {
   var hoje=new Date(); hoje.setHours(0,0,0,0);
@@ -318,7 +363,6 @@ function renderCal() {
   if(dataSel) renderSlots();
 }
 
-
 function renderSlots(){
   var ocup=ocupados[dataSel]||[], w=document.getElementById('slots'); w.innerHTML='';
   HORAS.forEach(function(h){
@@ -332,8 +376,6 @@ function renderSlots(){
   });
 }
 
-
-// ── PASSO 3 ──────────────────────────────────────────────────
 async function confirmar() {
   if(!dataSel||!horaSel){alert('Selecione data e horários.');return;}
   var btn=document.getElementById('btn3');
@@ -358,7 +400,7 @@ async function confirmar() {
       dadosAgendamentoPendente = 'https://wa.me/'+MECANICO_WPP+'?text='+msg;
       document.getElementById('confirmModal').style.display = 'flex';
     } else {
-      // MOID: Mostrar success NO CARD 3, não tela cheia
+      // SUCESSO NO CARD 3
       document.getElementById('cal-grid').parentElement.style.display = 'none';
       document.getElementById('btn3').style.display = 'none';
       
@@ -367,27 +409,30 @@ async function confirmar() {
       document.getElementById('stxt').textContent = 'Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
     }
   } catch(e){
-    alert('Erro ao agendar.'); btn.disabled=false; btn.innerHTML='📅 Confirmar';
+    // ERRO NO CARD 3
+    document.getElementById('cal-grid').parentElement.style.display = 'none';
+    document.getElementById('btn3').style.display = 'none';
+    document.getElementById('erroBox').style.display = 'block';
+    btn.disabled=false;
+    btn.innerHTML='📅 Confirmar';
   }
 }
 
-
 var dadosAgendamentoPendente = null;
-
 
 function fecharErro() {
   document.getElementById('erroBox').style.display = 'none';
+  document.getElementById('cal-grid').parentElement.style.display = 'flex';
+  document.getElementById('btn3').style.display = 'inline-block';
   var btn=document.getElementById('btn3');
   btn.disabled=false;
   btn.innerHTML='📅 Confirmar';
 }
 
-
 function cancelarRedirecionamento() {
   document.getElementById('confirmModal').style.display = 'none';
-  document.getElementById('erroBox').style.display = 'flex';
+  document.getElementById('erroBox').style.display = 'block';
 }
-
 
 function confirmarRedirecionamento() {
   document.getElementById('confirmModal').style.display = 'none';
@@ -396,37 +441,6 @@ function confirmarRedirecionamento() {
     window.location.href = dadosAgendamentoPendente;
   }
 }
-
-
-// Check inicial para mensagem de sucesso (se veio do WhatsApp)
-if(localStorage.getItem('drm_agendado')==='1'){
-  localStorage.removeItem('drm_agendado');
-  // MOID: Mostrar no CARD 3, não tela cheia
-  goStep(3);
-  document.getElementById('cal-grid').parentElement.style.display = 'none';
-  document.getElementById('btn3').style.display = 'none';
-  
-  var s = document.getElementById('success');
-  s.style.display = 'block';
-  document.getElementById('stxt').textContent = 'Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
-}
-
-
-document.addEventListener('visibilitychange', function(){
-  if(document.visibilityState==='visible'){
-    if(localStorage.getItem('drm_agendado')==='1'){
-      localStorage.removeItem('drm_agendado');
-      // MOID: Mostrar no CARD 3, não tela cheia
-      goStep(3);
-      document.getElementById('cal-grid').parentElement.style.display = 'none';
-      document.getElementById('btn3').style.display = 'none';
-      
-      var s = document.getElementById('success');
-      s.style.display = 'block';
-      document.getElementById('stxt').textContent = 'Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
-    }
-  }
-});
 </script>
 </body>
 </html>
