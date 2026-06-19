@@ -68,22 +68,20 @@ body{
     <a class="btn-voltar" href="/login.html" style="margin-top:16px;display:inline-block">Fazer Login →</a>
   </div>
 
-  <div class="success" id="success-revisao" style="display:none">
-    <div class="emj">🔍</div>
-    <h2>Carro em revisão!</h2>
-    <p>Seu carro foi enviado para revisão manual. Aguarde o dr Mecânico enviar uma mensagem no WhatsApp confirmando.</p>
-    <a class="btn-voltar" href="/index.html" style="margin-top:16px;display:inline-block">Voltar ao início</a>
-  </div>
+
 
   <div class="cards" id="cards">
 
     <!-- CARD 1 -->
-    <div class="card card-1 open" id="c1"  >
-      <div class="card-title"  onclick="trocar(1)" >Dados pessoais e do veículo</div>
-      <div class="card-body" id="b1">
-        <div class="white-box">
-          <div class="inner-scroll">
-          <div class="err" id="err1"></div>
+    <div class="card-body" id="b1">
+  <div class="white-box">
+    <div id="revisao-sucesso-msg" style="display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;height:100%">
+      <div style="font-size:48px;margin-bottom:12px">🔍</div>
+      <h3 style="color:#3E4095;margin-bottom:8px">Carro em revisão!</h3>
+      <p style="color:#888;font-size:13px;line-height:1.6">Seu carro foi enviado para revisão manual. Aguarde o dr Mecânico enviar uma mensagem no WhatsApp confirmando.</p>
+      <a href="/home.html" style="margin-top:16px;padding:10px 24px;background:#3E4095;color:white;border-radius:20px;text-decoration:none;font-weight:700;font-size:13px">Voltar ao início</a>
+    </div>
+    <div class="inner-scroll"   id="form-card1-content">
           <div class="fg"><label>Nome completo *</label><input id="nome" placeholder="Seu nome completo"></div>
           <div class="fg"><label>E-mail *</label><input type="email" id="email" placeholder="seu@email.com"></div>
           <div class="fg-row">
@@ -173,6 +171,7 @@ body{
             <input type="file" id="hodo-input" accept="image/*" capture="environment" style="display:none" onchange="previewFoto(this,'hodo')">
           </div>
           </div>
+          </div>
           <!-- Nav flutuante card 1 -->
           <div class="float-nav float-nav-purple">
           
@@ -228,9 +227,22 @@ body{
     <!-- CARD 3 -->
     <div class="card card-3 closed" id="c3" >
       <div class="card-title" onclick="trocar(3)">Pagamento</div>
-      <div class="card-body" id="b3" style="display:none">
-        <div class="white-box">
-          <div class="inner-scroll">
+     <div class="card-body" id="b3" style="display:none">
+  <div class="white-box">
+    <div id="pagamento-sucesso-msg" style="display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;height:100%">
+      <div style="font-size:48px;margin-bottom:12px">🎉</div>
+      <h3 style="color:#3E4095;margin-bottom:8px">Bem-vindo ao drMecânico, <span id="success-nome"></span>!</h3>
+      <p style="color:#888;font-size:13px;margin-bottom:12px">Assinatura confirmada! Suas credenciais de acesso:</p>
+      <div style="background:#f0f9ff;border:1.5px solid #00AEEF;border-radius:12px;padding:14px;margin:12px 0;text-align:left;width:100%">
+        <div style="font-size:12px;color:#888;margin-bottom:4px">E-mail</div>
+        <div style="font-size:14px;font-weight:700;color:#3E4095;margin-bottom:10px" id="success-email"></div>
+        <div style="font-size:12px;color:#888;margin-bottom:4px">Senha temporária</div>
+        <div style="font-size:18px;font-weight:900;color:#4745F1;letter-spacing:2px" id="success-senha"></div>
+      </div>
+      <p style="font-size:11px;color:#aaa">Salve sua senha! Você pode alterá-la depois no seu perfil.</p>
+      <a href="/login.html" style="margin-top:12px;padding:10px 24px;background:#3E4095;color:white;border-radius:20px;text-decoration:none;font-weight:700;font-size:13px">Fazer Login →</a>
+    </div>
+    <div class="inner-scroll" id="form-card3-content">
           <div class="err" id="err3"></div>
           <div class="price-resumo">
             <div class="price-row"><span>Clube dr Mecânico</span><span>R$89,90/mês</span></div>
@@ -271,11 +283,10 @@ body{
             </div>
           </div>
           
-          <button class="btn-fin" id="btn-fin" onclick="finalizar()">🔒 Concluir Assinatura — R$89,90</button>
-          <button type="button" onclick="testarFluxoSenha()" style="width:100%;padding:10px;margin-top:8px;background:#eee;color:#888;border:1px dashed #ccc;border-radius:20px;font-size:12px;cursor:pointer">🧪 [TESTE] Pular pagamento e ir pra criar senha</button>
+         <button class="btn-fin" id="btn-fin" onclick="finalizar()">🔒 Concluir Assinatura — R$89,90</button>
           <p style="text-align:center;font-size:11px;color:#bbb;margin-top:8px">🔒 Pagamento seguro via Pagar.me</p>
           </div>
-         
+          </div>
           
           
           </div>
@@ -345,9 +356,10 @@ function validar1() {
 }
 
 function validarTermo() {
-  if(!document.getElementById('aceito').checked){ alert('Aceite os termos para continuar.'); return false; }
+  if(!document.getElementById('check-seguradora').checked){ alert('Marque que entende as condições do serviço.'); return false; }
   return true;
-}
+}if(!document.getElementById('check-termos').checked){ alert('Aceite os Termos de Uso e a Política de Privacidade'); return false; }
+  return true;
 
 function toggleAceito() {
   var ok=document.getElementById('aceito').checked;
@@ -548,11 +560,11 @@ async function finalizar() {
       })
     });
 
-    document.getElementById('cards').style.display='none';
-    var s=document.getElementById('success'); s.style.display='flex';
-    document.getElementById('success-nome').textContent=payload.cliente.nome.split(' ')[0];
-    document.getElementById('success-email').textContent=payload.cliente.email;
-    document.getElementById('success-senha').textContent=senha;
+document.getElementById('form-card3-content').style.display='none';
+document.getElementById('pagamento-sucesso-msg').style.display='flex';
+document.getElementById('success-nome').textContent=payload.cliente.nome.split(' ')[0];
+document.getElementById('success-email').textContent=payload.cliente.email;
+document.getElementById('success-senha').textContent=senha;
   } catch(e){ showErr('err3','Erro de conexão.'); btn.disabled=false; btn.innerHTML='🔒 Concluir Assinatura — R$89,90'; }
 }
 
@@ -564,47 +576,6 @@ document.getElementById('placa').addEventListener('input', checarCamposRevisaoMa
 document.getElementById('modelo-manual-input').addEventListener('input', checarCamposRevisaoManual);
 document.getElementById('foto-input').addEventListener('change', checarCamposRevisaoManual);
 document.getElementById('hodo-input').addEventListener('change', checarCamposRevisaoManual);
-
-async function testarFluxoSenha() {
-  var nome=document.getElementById('nome').value.trim();
-  var email=document.getElementById('email').value.trim();
-  var tel=document.getElementById('tel').value.trim();
-  var cpf=document.getElementById('cpf').value.trim();
-  var placa=document.getElementById('placa').value.trim();
-  var modelo=document.getElementById('modelo').value.trim();
-  var ano=document.getElementById('ano').value.trim();
-  var cor=document.getElementById('cor').value.trim();
-
-  if(!nome||!email){ alert('Preencha pelo menos nome e e-mail no Card 1 primeiro.'); return; }
-
-  var senhaTemp = Math.random().toString(36).slice(2,10);
-
-  try {
-    var r = await fetch('https://drmecanico-backend-2.onrender.com/api/auth/register',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        name:nome,
-        email:email,
-        password:senhaTemp,
-        phone:tel,
-        cpf:cpf,
-        veiculo:{ placa:placa, modelo:modelo, ano:ano, cor:cor },
-        fotoVeiculo:urlFotoVeiculo,
-        fotoHodometro:urlFotoHodometro,
-        aceitouTermos:true,
-        aceitouNaoSeguradora:true
-      })
-    });
-    var data = await r.json();
-    if(!r.ok){ alert('Erro ao criar usuário teste: ' + (data.error||'')); return; }
-
-    localStorage.setItem('drm_email_checkout', email);
-    window.location.href = '/criar-senha.html';
-  } catch(e) {
-    alert('Erro de conexão: ' + e.message);
-  }
-}
 
 async function enviarRevisaoManual() {
   var btn=document.getElementById('btn-revisao-manual');
@@ -637,9 +608,8 @@ async function enviarRevisaoManual() {
       return;
     }
 
-    document.getElementById('cards').style.display='none';
-    var s=document.getElementById('success-revisao');
-    s.style.cssText='display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);padding:40px 24px;';
+    document.getElementById('form-card1-content').style.display='none';
+document.getElementById('revisao-sucesso-msg').style.display='flex';
 
   } catch(e) {
     console.error('ERRO REVISAO MANUAL:', e);
