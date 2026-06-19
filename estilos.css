@@ -36,18 +36,14 @@ html, body{
     overflow:visible;
 }
 
-body{
-    
-    background-color: #ffffff !important;
-}
+
 
 .page{
     width:100%;
     max-width:705px;
     position:relative;
    /* height:100%;*/
-   background-color:white;
-   background-color: #ffffff !important;
+ 
     display:flex;
     flex-direction:column;
     padding-bottom:110px;
