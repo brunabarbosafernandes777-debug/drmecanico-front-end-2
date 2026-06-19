@@ -597,13 +597,12 @@ async function enviarRevisaoManual() {
     s.style.cssText='display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);padding:40px 24px;';
     document.getElementById('stxt').textContent='Seu carro foi enviado para revisão manual. Aguarde o dr Mecânico enviar uma mensagem no WhatsApp confirmando.';
 
-  } catch(e) {
-    alert('Erro de conexão. Tente novamente.');
+ } catch(e) {
+    console.error('ERRO REVISAO MANUAL:', e);
+    alert('Erro de conexão: ' + e.message);
     btn.disabled=false;
     btn.innerHTML='Enviar para revisão manual';
   }
-}
-
 
 </script>
 </body>
