@@ -534,18 +534,47 @@ document.getElementById('modelo-manual-input').addEventListener('input', checarC
 document.getElementById('foto-input').addEventListener('change', checarCamposRevisaoManual);
 document.getElementById('hodo-input').addEventListener('change', checarCamposRevisaoManual);
 
-function enviarRevisaoManual() {
-  var nome=document.getElementById('nome').value.trim();
-  var modeloManual=document.getElementById('modelo-manual-input').value.trim();
+async function enviarRevisaoManual() {
+  var btn=document.getElementById('btn-revisao-manual');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spin"></span> Enviando...';
 
-  // Aqui você pode enviar esses dados pro backend se quiser registrar a revisão manual
-  console.log('Revisão manual solicitada:', nome, modeloManual);
+  var payload = {
+    nome: document.getElementById('nome').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    telefone: document.getElementById('tel').value.trim(),
+    cpf: document.getElementById('cpf').value.trim(),
+    placa: document.getElementById('placa').value.trim(),
+    modelo: document.getElementById('modelo-manual-input').value.trim(),
+    fotoVeiculo: urlFotoVeiculo,
+    fotoHodometro: urlFotoHodometro
+  };
 
-  // Esconde o formulário e mostra a mensagem de sucesso
-  document.getElementById('cards').style.display='none';
-  var s=document.getElementById('success');
-  s.style.cssText='display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);padding:40px 24px;';
-  document.getElementById('stxt').textContent='Seu carro foi enviado para revisão manual. Aguarde o dr Mecânico enviar uma mensagem no WhatsApp confirmando.';
+  try {
+    var resp = await fetch('https://drmecanico-backend-2.onrender.com/api/revisao-manual', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    var data = await resp.json();
+
+    if(!resp.ok){
+      alert('Erro ao enviar: ' + (data.error || 'tente novamente'));
+      btn.disabled=false;
+      btn.innerHTML='Enviar para revisão manual';
+      return;
+    }
+
+    document.getElementById('cards').style.display='none';
+    var s=document.getElementById('success');
+    s.style.cssText='display:flex !important;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(255,255,255,0.97);padding:40px 24px;';
+    document.getElementById('stxt').textContent='Seu carro foi enviado para revisão manual. Aguarde o dr Mecânico enviar uma mensagem no WhatsApp confirmando.';
+
+  } catch(e) {
+    alert('Erro de conexão. Tente novamente.');
+    btn.disabled=false;
+    btn.innerHTML='Enviar para revisão manual';
+  }
 }
 
 
