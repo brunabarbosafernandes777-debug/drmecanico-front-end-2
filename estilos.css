@@ -606,7 +606,7 @@ transform:translateY(-0.5px);
   font-family:'Gadugi', sans-serif;
  display:flex;
  justify-content:space-evenly;
-background: rgba(120, 120, 120, 0.70); /* ou a cor do seu app */
+background: rgba(120, 120, 120, 0.44); /* ou a cor do seu app */
   backdrop-filter:blur(10px);
   display: flex;
   justify-content: space-around;
