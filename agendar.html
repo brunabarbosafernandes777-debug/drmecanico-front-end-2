@@ -219,7 +219,7 @@ if(localStorage.getItem('drm_agendado')==='1'){
   
   var s = document.getElementById('success');
   s.style.display = 'block';
-  document.getElementById('stxt').textContent = 'Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
+  document.getElementById('stxt').textContent = 'Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento. (Se você não chegou a enviar a mensagem para o mecânico, o agendamento não será confirmado.)';
 }
 
 document.addEventListener('visibilitychange', function(){
@@ -232,7 +232,7 @@ document.addEventListener('visibilitychange', function(){
       
       var s = document.getElementById('success');
       s.style.display = 'block';
-      document.getElementById('stxt').textContent = 'Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento.';
+      document.getElementById('stxt').textContent = 'Agendamento bem sucedido! Aguarde a mensagem do mecânico no WhatsApp para confirmar seu agendamento. (Se você não chegou a enviar a mensagem para o mecânico, o agendamento não será confirmado.)';
     }
   }
 });
