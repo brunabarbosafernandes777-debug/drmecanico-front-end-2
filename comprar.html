@@ -259,7 +259,15 @@ body{
               <div class="fg"><label>Parcelas</label><select id="c2parc"><option value="1">1x</option><option value="2">2x</option><option value="3">3x</option><option value="6">6x</option><option value="12">12x</option></select></div>
             </div>
           </div>
-          <button class="btn-fin" id="btn-fin" onclick="finalizar()">🔒 Concluir Assinatura — R$84,90</button>
+          <div class="check-wrap">
+            <input type="checkbox" id="check-seguradora">
+            <label for="check-seguradora">Entendo que não se trata de uma seguradora e que alguns serviços possuem carência de 7 meses.</label>
+          </div>
+          <div class="check-wrap">
+            <input type="checkbox" id="check-termos">
+            <label for="check-termos">Li e aceito os <a href="/termos-de-uso.html" target="_blank">Termos de Uso</a> e a <a href="/politica-de-privacidade.html" target="_blank">Política de Privacidade</a>, e consinto com o tratamento dos meus dados pessoais.</label>
+          </div>
+          <button class="btn-fin" id="btn-fin" onclick="finalizar()">🔒 Concluir Assinatura — R$89,90</button>
           <p style="text-align:center;font-size:11px;color:#bbb;margin-top:8px">🔒 Pagamento seguro via Pagar.me</p>
           </div>
          
@@ -276,7 +284,7 @@ body{
 
 
 <script>
-var TOTAL = 84.90;
+var TOTAL = 89.90;
 var step  = 1;
 
 var CARROS = ["volkswagen gol", "volkswagen voyage", "volkswagen fox", "volkswagen saveiro", "fiat uno", "fiat palio", "fiat siena", "fiat grand siena", "fiat mobi", "fiat argo", "fiat cronos", "fiat strada", "fiat fiorino", "chevrolet celta", "chevrolet classic", "chevrolet corsa", "chevrolet prisma", "chevrolet onix", "chevrolet montana", "ford ka", "ford fiesta", "renault sandero", "renault logan", "hyundai hb20", "hyundai hb20s", "toyota etios", "nissan march", "nissan versa"];
@@ -470,13 +478,21 @@ function gerarSenha() {
 
 async function finalizar() {
   showErr('err3','');
+  if(!document.getElementById('check-seguradora').checked){
+    showErr('err3','Você precisa marcar que entende as condições do serviço.');
+    return;
+  }
+  if(!document.getElementById('check-termos').checked){
+    showErr('err3','Você precisa aceitar os Termos de Uso e a Política de Privacidade.');
+    return;
+  }
   var dois=document.getElementById('dois-cartoes').checked;
   var c1num=document.getElementById('c1num').value.replace(/\s/g,'');
   var c1nome=document.getElementById('c1nome').value.trim();
   var c1val=document.getElementById('c1val').value.trim();
   var c1cvv=document.getElementById('c1cvv').value.trim();
   if(!c1num||c1num.length<15||!c1nome||!c1val||!c1cvv){ showErr('err3','Preencha todos os campos do cartão 1.'); return; }
-await fetch('/api/auth/register',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ name:payload.cliente.nome, email:payload.cliente.email, password:senha, phone:payload.cliente.tel, cpf:payload.cliente.cpf, veiculo:{ placa:payload.cliente.placa, modelo:payload.cliente.modelo, ano:payload.cliente.ano, cor:payload.cliente.cor } }) });
+
   var payload={
   cliente:{
     nome:document.getElementById('nome').value.trim(),
@@ -493,7 +509,22 @@ await fetch('/api/auth/register',{ method:'POST', headers:{'Content-Type':'appli
     total:TOTAL,
     pagamentos:[{ valor:dois?parseFloat(document.getElementById('valor-c1').value):TOTAL, numero:c1num, nome:c1nome, validade:c1val, cvv:c1cvv, parcelas:parseInt(document.getElementById('c1parc').value) }]
   };
-
+await fetch('https://drmecanico-backend-2.onrender.com/api/auth/register',{
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({
+    name:payload.cliente.nome,
+    email:payload.cliente.email,
+    password:senha,
+    phone:payload.cliente.tel,
+    cpf:payload.cliente.cpf,
+    veiculo:{ placa:payload.cliente.placa, modelo:payload.cliente.modelo, ano:payload.cliente.ano, cor:payload.cliente.cor },
+    fotoVeiculo:urlFotoVeiculo,
+    fotoHodometro:urlFotoHodometro,
+    aceitouTermos:document.getElementById('check-termos').checked,
+    aceitouNaoSeguradora:document.getElementById('check-seguradora').checked
+  })
+});
   if(dois) {
     var v1=parseFloat(document.getElementById('valor-c1').value)||0;
     if(v1<=0||v1>=TOTAL){ showErr('err3','Valor do cartão 1 inválido.'); return; }

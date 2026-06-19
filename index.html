@@ -237,20 +237,22 @@ var CLIENT_ID = '425197317527-kt5c2j5lk56jqkk7klp188d5rra6gi0q.apps.googleuserco
 
   
 
- pos(document.getElementById('btn-google'), 133, 2266, 1333, 190);
-pos(document.getElementById('btn-nao-cliente'), 133, 2486, 1333, 190);
-  function pos(el, x, y, w, h) {
-    el.style.left   = (x*sx)+'px'; el.style.top    = (y*sy)+'px';
-    el.style.width  = (w*sx)+'px'; el.style.height = (h*sy)+'px';
-  }
+ /* Email e Senha - espaço central de 30px */
 
-  // Campos: x=133, y=2014, w=638, h=209 (login) | x=828 (senha)
-  pos(document.getElementById('field-email'), 133, 1800, 638, 209);
-  pos(document.getElementById('field-senha'), 828, 1800, 638, 209);
+pos(document.getElementById('field-email'), 133, 1800, 652, 209);
+pos(document.getElementById('field-senha'), 814, 1800, 652, 209);
 
-  // Botão Entrar: abaixo dos campos
-  pos(document.getElementById('btn-entrar'), 133, 2046, 1333, 190);
- 
+/* Entrar - 30px abaixo dos campos */
+
+pos(document.getElementById('btn-entrar'), 133, 2039, 1333, 190);
+
+/* Google - 30px abaixo do Entrar */
+
+pos(document.getElementById('btn-google'), 133, 2259, 1333, 190);
+
+/* Ainda não sou associado - 30px abaixo do Google */
+
+pos(document.getElementById('btn-nao-cliente'), 133, 2479, 1333, 190);
 
   // Erro
   var err = document.getElementById('lerr');
