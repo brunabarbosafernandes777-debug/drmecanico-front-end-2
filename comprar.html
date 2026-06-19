@@ -172,7 +172,7 @@ body{
             
             
            <button class="fnav-arrow" id="btn-continuar-step1" onclick="irStep(2)">&#9654;</button>
-<button class="fnav-arrow" id="btn-revisao-manual" onclick="enviarRevisaoManual()" style="display:none;background:#FE7213;color:white;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:700;">Enviar para revisão manual</button>
+<button class="fnav-arrow" id="btn-revisao-manual" onclick="enviarRevisaoManual()" style="display:none;background:#4745F1;color:white;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:700;">Enviar para revisão manual</button>
           </div>
         </div>
       </div>
@@ -200,9 +200,13 @@ body{
             <h3>6. Cancelamento</h3>
             <p>O associado pode cancelar a qualquer momento. Não há reembolso proporcional do mês vigente.</p>
           </div>
+           <div class="check-wrap">
+            <input type="checkbox" id="check-seguradora">
+            <label for="check-seguradora">Entendo que não se trata de uma seguradora e que alguns serviços possuem carência de 7 meses.</label>
+          </div>
           <div class="check-wrap">
-            <input type="checkbox" id="aceito" onchange="toggleAceito()">
-            <label for="aceito">Li e aceito os termos de adesão</label>
+            <input type="checkbox" id="check-termos">
+            <label for="check-termos">Li e aceito os <a href="/termos-de-uso.html" target="_blank">Termos de Uso</a> e a <a href="/politica-de-privacidade.html" target="_blank">Política de Privacidade</a>, e consinto com o tratamento dos meus dados pessoais.</label>
           </div>
           </div>
           <!-- Nav flutuante card 2 -->
@@ -259,14 +263,7 @@ body{
               <div class="fg"><label>Parcelas</label><select id="c2parc"><option value="1">1x</option><option value="2">2x</option><option value="3">3x</option><option value="6">6x</option><option value="12">12x</option></select></div>
             </div>
           </div>
-          <div class="check-wrap">
-            <input type="checkbox" id="check-seguradora">
-            <label for="check-seguradora">Entendo que não se trata de uma seguradora e que alguns serviços possuem carência de 7 meses.</label>
-          </div>
-          <div class="check-wrap">
-            <input type="checkbox" id="check-termos">
-            <label for="check-termos">Li e aceito os <a href="/termos-de-uso.html" target="_blank">Termos de Uso</a> e a <a href="/politica-de-privacidade.html" target="_blank">Política de Privacidade</a>, e consinto com o tratamento dos meus dados pessoais.</label>
-          </div>
+          
           <button class="btn-fin" id="btn-fin" onclick="finalizar()">🔒 Concluir Assinatura — R$89,90</button>
           <p style="text-align:center;font-size:11px;color:#bbb;margin-top:8px">🔒 Pagamento seguro via Pagar.me</p>
           </div>
