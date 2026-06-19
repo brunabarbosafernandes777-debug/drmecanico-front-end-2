@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Verificando E-mail — dr Mecânico</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #FAFAFA; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; max-width: 400px; }
+    .status-icon { font-size: 50px; margin-bottom: 20px; }
+    .btn { display: inline-block; margin-top: 20px; background: #FE7213; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<div class="box" id="content">
+  <div class="status-icon">⏳</div>
+  <h2>Aguarde...</h2>
+  <p>Estamos confirmando seu e-mail.</p>
+</div>
+
+<script>
+  async function verificar() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    const content = document.getElementById('content');
+
+    if (!token) {
+      content.innerHTML = '<div class="status-icon">❌</div><h2>Erro</h2><p>Token inválido.</p>';
+      return;
+    }
+
+    try {
+      // O fetch aponta para o seu backend. 
+      // Se a página de verificação estiver no mesmo domínio do backend, pode usar o caminho relativo
+      const r = await fetch(`https://drmecanico-backend-2.onrender.com/api/auth/verificar-email?token=${token}`);
+      const text = await r.text();
+      
+      // Como seu backend já retorna um HTML pronto na função paginaResultado, 
+      // nós apenas substituímos o conteúdo da página com o HTML do servidor.
+      document.body.innerHTML = text; 
+    } catch (e) {
+      content.innerHTML = '<div class="status-icon">❌</div><h2>Erro</h2><p>Falha ao conectar com o servidor.</p>';
+    }
+  }
+
+  verificar();
+</script>
+</body>
+</html>
