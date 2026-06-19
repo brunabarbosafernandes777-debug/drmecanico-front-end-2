@@ -79,8 +79,8 @@
    <![CDATA[
     .str0 {stroke:#3E4095;stroke-width:0.47116}
     .fil2 {fill:none}
-    .fil0 {fill:#FFFFFF;fill-rule:nonzero}
-.fil1 {fill:#FFFFFF;fill-rule:nonzero}
+    .fil0 {fill:#0098DA;fill-rule:nonzero}
+    .fil1 {fill:#3E4095;fill-rule:nonzero}
    ]]>
   </style></defs>
  <g
