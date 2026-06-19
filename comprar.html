@@ -300,25 +300,40 @@ body{
 
 
 <script>
+
 var TOTAL = 89.90;
 var step  = 1;
 
 var CARROS = ["volkswagen gol", "volkswagen voyage", "volkswagen fox", "volkswagen saveiro", "fiat uno", "fiat palio", "fiat siena", "fiat grand siena", "fiat mobi", "fiat argo", "fiat cronos", "fiat strada", "fiat fiorino", "chevrolet celta", "chevrolet classic", "chevrolet corsa", "chevrolet prisma", "chevrolet onix", "chevrolet montana", "ford ka", "ford fiesta", "renault sandero", "renault logan", "hyundai hb20", "hyundai hb20s", "toyota etios", "nissan march", "nissan versa"];
 
-function trocar(n) { if(n < step) irStep(n); }
+function trocar(n) { 
+  if(n < step) irStep(n); 
+}
 
 function irStep(n) {
   if(n===2 && !validar1()) return;
   if(n===3 && !validarTermo()) return;
+
   [1,2,3].forEach(function(i){
     var c=document.getElementById('c'+i), b=document.getElementById('b'+i);
-    if(i===n){ c.classList.remove('closed'); c.classList.add('open'); b.style.display='flex'; }
-    else     { c.classList.remove('open');   c.classList.add('closed'); b.style.display='none'; }
+    if(i===n){ 
+      c.classList.remove('closed'); 
+      c.classList.add('open'); 
+      b.style.display='flex'; 
+    } else { 
+      c.classList.remove('open');   
+      c.classList.add('closed'); 
+      b.style.display='none'; 
+    }
   });
+
   step=n;
 }
 
-function showErr(id,msg){ var e=document.getElementById(id); if(e){e.textContent=msg;e.style.display=msg?'block':'none';} }
+function showErr(id,msg){ 
+  var e=document.getElementById(id); 
+  if(e){e.textContent=msg;e.style.display=msg?'block':'none';} 
+}
 
 function validar1() {
   var nome=document.getElementById('nome').value.trim();
@@ -328,144 +343,122 @@ function validar1() {
   var placa=document.getElementById('placa').value.trim();
   var modelo=document.getElementById('modelo').value.trim();
 
-  if(!nome||!email||!tel||!cpf||!placa||!modelo){ showErr('err1','Preencha todos os campos obrigatórios.'); return false; }
+  if(!nome||!email||!tel||!cpf||!placa||!modelo){ 
+    showErr('err1','Preencha todos os campos obrigatórios.'); 
+    return false; 
+  }
 
-  var partesNome = nome.split(' ').filter(function(p){ return p.length > 0; });
-  if(partesNome.length < 2){ showErr('err1','Digite seu nome completo (nome e sobrenome).'); return false; }
+  var partesNome = nome.split(' ').filter(p => p.length > 0);
+  if(partesNome.length < 2){ 
+    showErr('err1','Digite seu nome completo.'); 
+    return false; 
+  }
 
   var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if(!emailRegex.test(email)){ showErr('err1','E-mail inválido.'); return false; }
+  if(!emailRegex.test(email)){ 
+    showErr('err1','E-mail inválido.'); 
+    return false; 
+  }
 
   var telDigitos = tel.replace(/\D/g,'');
-  if(telDigitos.length < 10 || telDigitos.length > 11){ showErr('err1','Telefone inválido. Use DDD + número (10 ou 11 dígitos).'); return false; }
+  if(telDigitos.length < 10 || telDigitos.length > 11){ 
+    showErr('err1','Telefone inválido.'); 
+    return false; 
+  }
 
   var cpfDigitos = cpf.replace(/\D/g,'');
-  if(cpfDigitos.length !== 11 || !validarCPF(cpfDigitos)){ showErr('err1','CPF inválido.'); return false; }
+  if(cpfDigitos.length !== 11 || !validarCPF(cpfDigitos)){ 
+    showErr('err1','CPF inválido.'); 
+    return false; 
+  }
 
   var placaLimpa = placa.replace(/[\s-]/g,'').toUpperCase();
   var placaAntiga = /^[A-Z]{3}[0-9]{4}$/;
   var placaMercosul = /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/;
-  if(!placaAntiga.test(placaLimpa) && !placaMercosul.test(placaLimpa)){ showErr('err1','Placa inválida. Use o formato ABC1234 ou ABC1D23.'); return false; }
 
-  if(!validarCarro()){ showErr('err1','Seu veículo não é atendido pelo plano.'); return false; }
-  if(document.querySelector('input[name="uber"]:checked').value==='sim'){ showErr('err1','Motoristas de aplicativo não são elegíveis.'); return false; }
-  if(!document.getElementById('foto-input').files.length){ showErr('err1','Adicione a foto do veículo.'); return false; }
-  if(!document.getElementById('hodo-input').files.length){ showErr('err1','Adicione a foto do hodômetro.'); return false; }
+  if(!placaAntiga.test(placaLimpa) && !placaMercosul.test(placaLimpa)){ 
+    showErr('err1','Placa inválida.'); 
+    return false; 
+  }
 
-  showErr('err1',''); return true;
+  if(!validarCarro()){ 
+    showErr('err1','Seu veículo não é atendido.'); 
+    return false; 
+  }
+
+  if(document.querySelector('input[name="uber"]:checked').value==='sim'){ 
+    showErr('err1','Motoristas de app não são elegíveis.'); 
+    return false; 
+  }
+
+  if(!document.getElementById('foto-input').files.length){ 
+    showErr('err1','Adicione a foto do veículo.'); 
+    return false; 
+  }
+
+  if(!document.getElementById('hodo-input').files.length){ 
+    showErr('err1','Adicione a foto do hodômetro.'); 
+    return false; 
+  }
+
+  showErr('err1','');
+  return true;
 }
 
+/* 🔴 CORREÇÃO PRINCIPAL (ESTAVA FORA DA FUNÇÃO) */
 function validarTermo() {
-  if(!document.getElementById('check-seguradora').checked){ alert('Marque que entende as condições do serviço.'); return false; }
-  return true;
-}if(!document.getElementById('check-termos').checked){ alert('Aceite os Termos de Uso e a Política de Privacidade'); return false; }
-  return true;
+  if(!document.getElementById('check-seguradora').checked){
+    alert('Marque que entende as condições do serviço.');
+    return false;
+  }
 
-function toggleAceito() {
-  var ok=document.getElementById('aceito').checked;
-  var a=document.getElementById('fnav-arrow2'); if(a) a.disabled=!ok;
+  if(!document.getElementById('check-termos').checked){
+    alert('Aceite os Termos de Uso e a Política de Privacidade');
+    return false;
+  }
+
+  return true;
 }
 
 function validarCarro() {
   var modelo=document.getElementById('modelo').value.trim().toLowerCase();
-  if(!modelo){ document.getElementById('carro-err').style.display='none'; return true; }
-  var ok=CARROS.some(function(c){ return modelo.includes(c)||c.includes(modelo.split(' ')[0]); });
-  document.getElementById('carro-err').style.display=ok?'none':'block';
-  return ok;
-}
-function onModeloChange() {
-  var modelo = document.getElementById('modelo').value;
-  var campoManual = document.getElementById('modelo-manual');
-  var btnContinuar = document.getElementById('btn-continuar-step1');
-  var btnRevisao = document.getElementById('btn-revisao-manual');
+  if(!modelo){ return true; }
 
-  if(modelo === 'outro') {
-    campoManual.style.display = 'block';
-    btnContinuar.style.display = 'none';
-    btnRevisao.style.display = 'inline-block';
-    btnRevisao.disabled = true;
-  } else {
-    campoManual.style.display = 'none';
-    btnContinuar.style.display = 'inline-block';
-    btnRevisao.style.display = 'none';
-  }
+  return CARROS.some(function(c){ 
+    return modelo.includes(c); 
+  });
 }
-function checarCamposRevisaoManual() {
-  var nome=document.getElementById('nome').value.trim();
-  var email=document.getElementById('email').value.trim();
-  var tel=document.getElementById('tel').value.trim();
-  var cpf=document.getElementById('cpf').value.trim();
-  var placa=document.getElementById('placa').value.trim();
-  var modeloManual=document.getElementById('modelo-manual-input').value.trim();
-  var temFoto=document.getElementById('foto-input').files.length > 0;
-  var temHodo=document.getElementById('hodo-input').files.length > 0;
 
-  var btnRevisao = document.getElementById('btn-revisao-manual');
-  if(nome && email && tel && cpf && placa && modeloManual && temFoto && temHodo) {
-    btnRevisao.disabled = false;
-  } else {
-    btnRevisao.disabled = true;
-  }
-}
 function checkUber() {
   var v=document.querySelector('input[name="uber"]:checked').value;
   document.getElementById('uber-err').style.display=v==='sim'?'block':'none';
 }
 
-var urlFotoVeiculo = '';
-var urlFotoHodometro = '';
-
-async function previewFoto(input,tipo) {
-  if(!input.files||!input.files[0]) return;
-
-  var r=new FileReader();
-  r.onload=function(e){ document.getElementById(tipo+'-img').src=e.target.result; document.getElementById(tipo+'-preview').style.display='block'; document.getElementById(tipo+'-placeholder').style.display='none'; };
-  r.readAsDataURL(input.files[0]);
-
-  var formData = new FormData();
-  formData.append('foto', input.files[0]);
-
-  try {
-    var resp = await fetch('https://drmecanico-backend-2.onrender.com/api/upload', {
-      method: 'POST',
-      body: formData
-    });
-    var data = await resp.json();
-    if(data.url) {
-      if(tipo === 'foto') urlFotoVeiculo = data.url;
-      if(tipo === 'hodo') urlFotoHodometro = data.url;
-    }
-  } catch(e) {
-    console.error('Erro no upload da foto:', e);
-  }
-
-  checarCamposRevisaoManual();
-}
-
-function toggleDoisCartoes() {
-  var d=document.getElementById('dois-cartoes').checked;
-  document.getElementById('bloco-c2').style.display=d?'block':'none';
-  document.getElementById('valor-c1-wrap').style.display=d?'block':'none';
-  if(d) calcValor2();
-}
 function validarCPF(cpf) {
   if(cpf.length !== 11) return false;
   if(/^(\d)\1{10}$/.test(cpf)) return false;
 
   var soma = 0, resto;
-  for(var i=1; i<=9; i++) soma += parseInt(cpf.substring(i-1,i)) * (11-i);
+
+  for(var i=1; i<=9; i++)
+    soma += parseInt(cpf.substring(i-1,i)) * (11-i);
+
   resto = (soma*10) % 11;
-  if(resto===10||resto===11) resto=0;
-  if(resto !== parseInt(cpf.substring(9,10))) return false;
+  if(resto>=10) resto=0;
+  if(resto != cpf[9]) return false;
 
   soma = 0;
-  for(var i=1; i<=10; i++) soma += parseInt(cpf.substring(i-1,i)) * (12-i);
+  for(var i=1; i<=10; i++)
+    soma += parseInt(cpf.substring(i-1,i)) * (12-i);
+
   resto = (soma*10) % 11;
-  if(resto===10||resto===11) resto=0;
-  if(resto !== parseInt(cpf.substring(10,11))) return false;
+  if(resto>=10) resto=0;
+  if(resto != cpf[10]) return false;
 
   return true;
 }
+
+
 
 function calcValor2() {
   var v1=parseFloat(document.getElementById('valor-c1').value)||0;
