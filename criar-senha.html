@@ -100,6 +100,7 @@ body { background:#3E4095 !important; display:flex; justify-content:center; min-
     <p style="font-size: 0.9em; margin: 10px 0;">Um link de ativação foi enviado para o seu e-mail cadastrado.</p>
     <a href="javascript:void(0)" onclick="reenviarEmail()" style="color:#00D4FF; font-size: 0.9em;">Não recebeu? Reenviar link.</a>
 </div>
+<button id="btn-reenviar">Reenviar e-mail de confirmação</button>
   <div class="field-over" id="field-senha">
     <input type="password" id="inp-senha" placeholder="crie sua senha">
   </div>
@@ -212,6 +213,25 @@ async function finalizarCadastro() {
     showErr(e.message);
   } finally {
     setBusy('btn-finalizar', false, 'Finalizar Cadastro');
+  }
+}
+async function reenviarEmail() {
+  var email = document.getElementById('inp-email').value.trim();
+  
+  try {
+    const r = await fetch('https://drmecanico-backend-2.onrender.com/api/auth/reenviar-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    });
+
+    if (r.ok) {
+      alert('E-mail enviado! Verifique sua caixa de entrada.');
+    } else {
+      alert('Erro ao reenviar. Tente novamente mais tarde.');
+    }
+  } catch (e) {
+    alert('Erro de conexão.');
   }
 }
 
