@@ -101,6 +101,7 @@ body { background:#3E4095 !important; display:flex; justify-content:center; min-
     <a href="javascript:void(0)" onclick="reenviarEmail()" style="color:#00D4FF; font-size: 0.9em;">Não recebeu? Reenviar link.</a>
 </div>
 <button id="btn-reenviar">Reenviar e-mail de confirmação</button>
+<a href="mailto:" class="btn-abrir-email">Abrir meu e-mail</a>
   <div class="field-over" id="field-senha">
     <input type="password" id="inp-senha" placeholder="crie sua senha">
   </div>
@@ -154,6 +155,9 @@ function ajustar() {
   err.style.top  = (ih*0.50)+'px';
   err.style.left = (iw*0.1)+'px';
 }
+// No seu script de cadastro
+const emailUsuario = document.getElementById('input-email').value;
+
 
 var bgsvg = document.getElementById('bgsvg');
 bgsvg.addEventListener('load', ajustar);
@@ -233,7 +237,28 @@ async function reenviarEmail() {
   } catch (e) {
     alert('Erro de conexão.');
   }
-}
+}// Na sua página de verificação de sucesso
+window.onload = () => {
+    // 1. O ajuste visual que você precisa
+    ajustar();
+    
+    // 2. Recupera o e-mail (usando as duas chaves que salvamos para garantir)
+    const emailRecuperado = localStorage.getItem('drm_email_checkout') || localStorage.getItem('email_pendente');
+    
+    if (emailRecuperado) {
+        const campoEmail = document.getElementById('inp-email');
+        if (campoEmail) {
+            campoEmail.value = emailRecuperado;
+        }
+    }
+};
+    
+    if (emailRecuperado) {
+        // Agora você tem o e-mail de volta e pode preencher o cadastro!
+        console.log("O e-mail do usuário é: " + emailRecuperado);
+        // Coloque aqui a lógica para avançar para a próxima tela
+    }
+};
 
 // ── Google Login ──────────────────────────────────────────
 function abrirPopupGoogle() {

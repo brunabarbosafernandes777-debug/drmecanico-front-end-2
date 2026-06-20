@@ -665,7 +665,10 @@ async function enviarRevisaoManual() {
     btn.disabled=false;
     btn.innerHTML='Enviar para revisão manual';
   }
-}
+}// Exemplo no seu script da página de Checkout/Pagamento:
+const emailDigitado = document.getElementById('seu-input-email').value;
+localStorage.setItem('drm_email_checkout', emailDigitado);
+window.location.href = 'tela-de-senha.html'; // Redireciona
 </script>
 </body>
 </html>
