@@ -607,7 +607,7 @@ transform:translateY(-0.5px);
  display:flex;
  justify-content:space-evenly;
 background: rgba(120, 120, 120, 0.19); /* ou a cor do seu app */
-  backdrop-filter:blur(10px);
+  
   display: flex;
   justify-content: space-around;
   align-items: center;
