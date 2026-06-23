@@ -156,7 +156,7 @@ function ajustar() {
   err.style.left = (iw*0.1)+'px';
 }
 // No seu script de cadastro
-const emailUsuario = document.getElementById('input-email').value;
+const emailUsuario = document.getElementById('inp-email').value;
 
 
 var bgsvg = document.getElementById('bgsvg');
@@ -245,13 +245,13 @@ window.onload = () => {
     // 2. Recupera o e-mail (usando as duas chaves que salvamos para garantir)
     const emailRecuperado = localStorage.getItem('drm_email_checkout') || localStorage.getItem('email_pendente');
     
-    if (emailRecuperado) {
+    
+};if (emailRecuperado) {
         const campoEmail = document.getElementById('inp-email');
         if (campoEmail) {
             campoEmail.value = emailRecuperado;
         }
     }
-};
     
     if (emailRecuperado) {
         // Agora você tem o e-mail de volta e pode preencher o cadastro!
