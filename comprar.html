@@ -6,6 +6,7 @@
 <meta name="color-scheme" content="light only">
 <title>dr Mecânico — Assinar</title>
 <link rel="stylesheet" href="estilos.css">
+<script src="https://sdk.mercadopago.com/js/v2"></script>
 
 <style>
 .bottom-nav{bottom: 
@@ -254,7 +255,6 @@ body{
           <div class="fg-row3">
             <div class="fg"><label>Validade *</label><input id="c1val" placeholder="MM/AA" maxlength="5" oninput="fmt(this,'exp')"></div>
             <div class="fg"><label>CVV *</label><input type="password" id="c1cvv" placeholder="123" maxlength="4"></div>
-            <div class="fg"><label>Parcelas</label><select id="c1parc"><option value="1">1x</option><option value="2">2x</option><option value="3">3x</option><option value="6">6x</option><option value="12">12x</option></select></div>
           </div>
           <div id="bloco-c2" style="display:none">
             <div class="card-header card2">Cartão 2</div>
@@ -267,13 +267,12 @@ body{
             <div class="fg-row3">
               <div class="fg"><label>Validade *</label><input id="c2val" placeholder="MM/AA" maxlength="5" oninput="fmt(this,'exp')"></div>
               <div class="fg"><label>CVV *</label><input type="password" id="c2cvv" placeholder="123" maxlength="4"></div>
-              <div class="fg"><label>Parcelas</label><select id="c2parc"><option value="1">1x</option><option value="2">2x</option><option value="3">3x</option><option value="6">6x</option><option value="12">12x</option></select></div>
             </div>
           </div>
           
           <button class="btn-fin" id="btn-fin" onclick="finalizar()">🔒 Concluir Assinatura — R$89,90</button>
           <button type="button" onclick="testarFluxoSenha()" style="width:100%;padding:10px;margin-top:8px;background:#eee;color:#888;border:1px dashed #ccc;border-radius:20px;font-size:12px;cursor:pointer">🧪 [TESTE] Pular pagamento e ir pra criar senha</button>
-          <p style="text-align:center;font-size:11px;color:#bbb;margin-top:8px">🔒 Pagamento seguro via Pagar.me</p>
+          <p style="text-align:center;font-size:11px;color:#bbb;margin-top:8px">🔒 Pagamento seguro via Mercado Pago</p>
           </div>
          
           
@@ -291,6 +290,17 @@ body{
 <script>
 var TOTAL = 89.90;
 var step  = 1;
+var mp = null;
+
+(async function initMercadoPago() {
+  try {
+    var r = await fetch('https://drmecanico-backend-2.onrender.com/api/pagamento/mp/chave-publica');
+    var data = await r.json();
+    if (data.publicKey) mp = new MercadoPago(data.publicKey, { locale: 'pt-BR' });
+  } catch(e) {
+    console.error('Erro ao carregar Mercado Pago:', e);
+  }
+})();
 
 var CARROS = ["volkswagen gol", "volkswagen voyage", "volkswagen fox", "volkswagen saveiro", "fiat uno", "fiat palio", "fiat siena", "fiat grand siena", "fiat mobi", "fiat argo", "fiat cronos", "fiat strada", "fiat fiorino", "chevrolet celta", "chevrolet classic", "chevrolet corsa", "chevrolet prisma", "chevrolet onix", "chevrolet montana", "ford ka", "ford fiesta", "renault sandero", "renault logan", "hyundai hb20", "hyundai hb20s", "toyota etios", "nissan march", "nissan versa"];
 
@@ -493,6 +503,19 @@ function gerarSenha() {
   var s=''; for(var i=0;i<8;i++) s+=c[Math.floor(Math.random()*c.length)]; return s;
 }
 
+async function tokenizarCartao(numero, nome, validade, cvv, cpf) {
+  var expParts = validade.split('/');
+  return mp.createCardToken({
+    cardNumber: numero,
+    cardholderName: nome,
+    cardExpirationMonth: expParts[0] || '',
+    cardExpirationYear: expParts[1] || '',
+    securityCode: cvv,
+    identificationType: 'CPF',
+    identificationNumber: cpf.replace(/\D/g,'')
+  });
+}
+
 async function finalizar() {
   showErr('err3','');
   if(!document.getElementById('check-seguradora').checked){
@@ -503,6 +526,8 @@ async function finalizar() {
     showErr('err3','Você precisa aceitar os Termos de Uso e a Política de Privacidade.');
     return;
   }
+  if(!mp){ showErr('err3','Pagamento indisponível no momento. Tente novamente em instantes.'); return; }
+
   var dois=document.getElementById('dois-cartoes').checked;
   var c1num=document.getElementById('c1num').value.replace(/\s/g,'');
   var c1nome=document.getElementById('c1nome').value.trim();
@@ -510,8 +535,7 @@ async function finalizar() {
   var c1cvv=document.getElementById('c1cvv').value.trim();
   if(!c1num||c1num.length<15||!c1nome||!c1val||!c1cvv){ showErr('err3','Preencha todos os campos do cartão 1.'); return; }
 
-  var payload={
-  cliente:{
+  var cliente={
     nome:document.getElementById('nome').value.trim(),
     email:document.getElementById('email').value.trim(),
     tel:document.getElementById('tel').value.trim(),
@@ -522,28 +546,45 @@ async function finalizar() {
     cor:document.getElementById('cor').value.trim(),
     fotoVeiculo:urlFotoVeiculo,
     fotoHodometro:urlFotoHodometro
-  },
-    total:TOTAL,
-    pagamentos:[{ valor:dois?parseFloat(document.getElementById('valor-c1').value):TOTAL, numero:c1num, nome:c1nome, validade:c1val, cvv:c1cvv, parcelas:parseInt(document.getElementById('c1parc').value) }]
   };
 
+  var valorC1 = TOTAL;
+  var v2 = null, c2num, c2nome, c2val, c2cvv;
+
   if(dois) {
-    var v1=parseFloat(document.getElementById('valor-c1').value)||0;
-    if(v1<=0||v1>=TOTAL){ showErr('err3','Valor do cartão 1 inválido.'); return; }
-    var c2num=document.getElementById('c2num').value.replace(/\s/g,'');
-    var c2nome=document.getElementById('c2nome').value.trim();
-    var c2val=document.getElementById('c2val').value.trim();
-    var c2cvv=document.getElementById('c2cvv').value.trim();
+    valorC1=parseFloat(document.getElementById('valor-c1').value)||0;
+    if(valorC1<=0||valorC1>=TOTAL){ showErr('err3','Valor do cartão 1 inválido.'); return; }
+    v2 = parseFloat((TOTAL-valorC1).toFixed(2));
+    c2num=document.getElementById('c2num').value.replace(/\s/g,'');
+    c2nome=document.getElementById('c2nome').value.trim();
+    c2val=document.getElementById('c2val').value.trim();
+    c2cvv=document.getElementById('c2cvv').value.trim();
     if(!c2num||c2num.length<15||!c2nome||!c2val||!c2cvv){ showErr('err3','Preencha todos os campos do cartão 2.'); return; }
-    payload.pagamentos.push({ valor:parseFloat((TOTAL-v1).toFixed(2)), numero:c2num, nome:c2nome, validade:c2val, cvv:c2cvv, parcelas:parseInt(document.getElementById('c2parc').value) });
   }
 
   var btn=document.getElementById('btn-fin');
   btn.disabled=true;
-  btn.innerHTML='<span class="spin"></span> Processando...';
+  btn.innerHTML='<span class="spin"></span> Validando cartão(ões)...';
 
   try {
-    var r=await fetch('/api/pagamento/pagarme',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+    var tk1 = await tokenizarCartao(c1num, c1nome, c1val, c1cvv, cliente.cpf);
+    if(!tk1 || !tk1.id){ showErr('err3','Não foi possível validar o cartão 1. Confira os dados.'); btn.disabled=false; btn.innerHTML='🔒 Concluir Assinatura — R$89,90'; return; }
+
+    var cartoes = [{ cardTokenId: tk1.id, valor: valorC1 }];
+
+    if(dois) {
+      var tk2 = await tokenizarCartao(c2num, c2nome, c2val, c2cvv, cliente.cpf);
+      if(!tk2 || !tk2.id){ showErr('err3','Não foi possível validar o cartão 2. Confira os dados.'); btn.disabled=false; btn.innerHTML='🔒 Concluir Assinatura — R$89,90'; return; }
+      cartoes.push({ cardTokenId: tk2.id, valor: v2 });
+    }
+
+    btn.innerHTML='<span class="spin"></span> Processando...';
+
+    var r=await fetch('/api/pagamento/mp/assinatura',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ nome:cliente.nome, email:cliente.email, cartoes:cartoes })
+    });
     var data=await r.json();
     if(!r.ok||data.error){ showErr('err3',data.error||'Erro ao processar pagamento.'); btn.disabled=false; btn.innerHTML='🔒 Concluir Assinatura — R$89,90'; return; }
 
@@ -553,12 +594,12 @@ async function finalizar() {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        name:payload.cliente.nome,
-        email:payload.cliente.email,
+        name:cliente.nome,
+        email:cliente.email,
         password:senha,
-        phone:payload.cliente.tel,
-        cpf:payload.cliente.cpf,
-        veiculo:{ placa:payload.cliente.placa, modelo:payload.cliente.modelo, ano:payload.cliente.ano, cor:payload.cliente.cor },
+        phone:cliente.tel,
+        cpf:cliente.cpf,
+        veiculo:{ placa:cliente.placa, modelo:cliente.modelo, ano:cliente.ano, cor:cliente.cor },
         fotoVeiculo:urlFotoVeiculo,
         fotoHodometro:urlFotoHodometro,
         aceitouTermos:document.getElementById('check-termos').checked,
@@ -568,10 +609,14 @@ async function finalizar() {
 
     document.getElementById('cards').style.display='none';
     var s=document.getElementById('success'); s.style.display='flex';
-    document.getElementById('success-nome').textContent=payload.cliente.nome.split(' ')[0];
-    document.getElementById('success-email').textContent=payload.cliente.email;
+    document.getElementById('success-nome').textContent=cliente.nome.split(' ')[0];
+    document.getElementById('success-email').textContent=cliente.email;
     document.getElementById('success-senha').textContent=senha;
-  } catch(e){ showErr('err3','Erro de conexão.'); btn.disabled=false; btn.innerHTML='🔒 Concluir Assinatura — R$89,90'; }
+  } catch(e){
+    console.error(e);
+    showErr('err3','Erro de conexão.');
+    btn.disabled=false; btn.innerHTML='🔒 Concluir Assinatura — R$89,90';
+  }
 }
 
 document.getElementById('nome').addEventListener('input', checarCamposRevisaoManual);
@@ -665,10 +710,7 @@ async function enviarRevisaoManual() {
     btn.disabled=false;
     btn.innerHTML='Enviar para revisão manual';
   }
-}// Exemplo no seu script da página de Checkout/Pagamento:
-const emailDigitado = document.getElementById('seu-input-email').value;
-localStorage.setItem('drm_email_checkout', emailDigitado);
-window.location.href = 'tela-de-senha.html'; // Redireciona
+}
 </script>
 </body>
 </html>
