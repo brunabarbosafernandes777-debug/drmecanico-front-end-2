@@ -580,7 +580,7 @@ async function finalizar() {
 
     btn.innerHTML='<span class="spin"></span> Processando...';
 
-    var r=await fetch('/api/pagamento/mp/assinatura',{
+    var r=await fetch('https://drmecanico-backend-2.onrender.com/api/pagamento/mp/assinatura',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({ nome:cliente.nome, email:cliente.email, cartoes:cartoes })
