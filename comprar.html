@@ -57,15 +57,12 @@ body{
   <div class="success" id="success">
     <div class="emj">🎉</div>
     <h2>Bem-vindo ao Clube, <span id="success-nome"></span>!</h2>
-    <p>Assinatura confirmada! Suas credenciais de acesso:</p>
+    <p>Assinatura confirmada! Falta só um passo: crie sua senha de acesso.</p>
     <div style="background:#f0f9ff;border:1.5px solid #00AEEF;border-radius:12px;padding:14px;margin:12px 0;text-align:left;width:100%">
-      <div style="font-size:12px;color:#888;margin-bottom:4px">E-mail</div>
-      <div style="font-size:14px;font-weight:700;color:#3E4095;margin-bottom:10px" id="success-email"></div>
-      <div style="font-size:12px;color:#888;margin-bottom:4px">Senha temporária</div>
-      <div style="font-size:18px;font-weight:900;color:#4745F1;letter-spacing:2px" id="success-senha"></div>
+      <div style="font-size:12px;color:#888;margin-bottom:4px">E-mail cadastrado</div>
+      <div style="font-size:14px;font-weight:700;color:#3E4095" id="success-email"></div>
     </div>
-    <p style="font-size:12px;color:#aaa">Salve sua senha! Você pode alterá-la depois no seu perfil.</p>
-    <a class="btn-voltar" href="/login.html" style="margin-top:16px;display:inline-block">Fazer Login →</a>
+    <button class="btn-fin" id="btn-criar-senha" onclick="irParaCriarSenha()" style="margin-top:8px">Criar minha senha →</button>
   </div>
 
   <div class="success" id="success-revisao" style="display:none">
@@ -491,6 +488,10 @@ function fmt(el,type) {
   el.value=v;
 }
 
+function irParaCriarSenha() {
+  window.location.href = 'criar-senha.html';
+}
+
 function gerarSenha() {
   var c='ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
   var s=''; for(var i=0;i<8;i++) s+=c[Math.floor(Math.random()*c.length)]; return s;
@@ -587,7 +588,7 @@ async function finalizar() {
     var s=document.getElementById('success'); s.style.display='flex';
     document.getElementById('success-nome').textContent=cliente.nome.split(' ')[0];
     document.getElementById('success-email').textContent=cliente.email;
-    document.getElementById('success-senha').textContent=senha;
+    localStorage.setItem('drm_email_checkout', cliente.email);
   } catch(e){
     console.error(e);
     showErr('err3','Erro de conexão.');
