@@ -202,11 +202,11 @@ body{
             <h3>3. Guincho</h3>
             <p>2 utilizações por ano, até 50km de ida + 50km de retorno. Excedente pago diretamente ao prestador (até R$12/km).</p>
             <h3>4. Pagamento</h3>
-            <p>Assinatura mensal de R$89,90. Cancelamento pode ser solicitado a qualquer momento sem multa.</p>
+            <p>Adesão anual de R$1.078,80, parcelada em 12x de R$89,90 no cartão. Não há devolução proporcional em caso de cancelamento (multa de 20% sobre o saldo remanescente, conforme contrato).</p>
             <h3>5. Agendamento</h3>
             <p>Serviços mediante agendamento prévio, de segunda a sexta das 8h às 18h.</p>
             <h3>6. Cancelamento</h3>
-            <p>O associado pode cancelar a qualquer momento. Não há reembolso proporcional do mês vigente.</p>
+            <p>A adesão é anual e não há reembolso proporcional em caso de cancelamento. Consulte o contrato completo para mais detalhes.</p>
           </div>
            <div class="check-wrap">
             <input type="checkbox" id="check-seguradora">
@@ -234,7 +234,7 @@ body{
           <div class="inner-scroll">
           <div class="err" id="err3"></div>
           <div class="price-resumo">
-            <div class="price-row"><span>Clube dr Mecânico</span><span>R$89,90/mês</span></div>
+            <div class="price-row"><span>Clube dr Mecânico (12x)</span><span>R$89,90 x12 = R$1.078,80</span></div>
             <div class="price-row"><span>7 primeiros dias</span><span style="color:#A8CF45">Grátis</span></div>
             <div style="border-top:1px solid #e0e0e0;margin:6px 0"></div>
             <div class="price-row total"><span>Total hoje</span><span>R$0,00</span></div>
@@ -270,7 +270,7 @@ body{
             </div>
           </div>
           
-          <button class="btn-fin" id="btn-fin" onclick="finalizar()">🔒 Concluir Assinatura — R$89,90</button>
+          <button class="btn-fin" id="btn-fin" onclick="finalizar()">🔒 Confirmar Adesão — 12x R$89,90</button>
           <button type="button" onclick="testarFluxoSenha()" style="width:100%;padding:10px;margin-top:8px;background:#eee;color:#888;border:1px dashed #ccc;border-radius:20px;font-size:12px;cursor:pointer">🧪 [TESTE] Pular pagamento e ir pra criar senha</button>
           <p style="text-align:center;font-size:11px;color:#bbb;margin-top:8px">🔒 Pagamento seguro via Mercado Pago</p>
           </div>
@@ -288,7 +288,7 @@ body{
 
 
 <script>
-var TOTAL = 89.90;
+var TOTAL = 89.90 * 12; // valor total anual (12 parcelas fixas de R$89,90)
 var step  = 1;
 
 var CARROS = ["volkswagen gol", "volkswagen voyage", "volkswagen fox", "volkswagen saveiro", "fiat uno", "fiat palio", "fiat siena", "fiat grand siena", "fiat mobi", "fiat argo", "fiat cronos", "fiat strada", "fiat fiorino", "chevrolet celta", "chevrolet classic", "chevrolet corsa", "chevrolet prisma", "chevrolet onix", "chevrolet montana", "ford ka", "ford fiesta", "renault sandero", "renault logan", "hyundai hb20", "hyundai hb20s", "toyota etios", "nissan march", "nissan versa"];
@@ -563,7 +563,7 @@ async function finalizar() {
       })
     });
     var data=await r.json();
-    if(!r.ok||data.error){ showErr('err3',data.error||'Erro ao processar pagamento.'); btn.disabled=false; btn.innerHTML='🔒 Concluir Assinatura — R$89,90'; return; }
+    if(!r.ok||data.error){ showErr('err3',data.error||'Erro ao processar pagamento.'); btn.disabled=false; btn.innerHTML='🔒 Confirmar Adesão — 12x R$89,90'; return; }
 
     btn.innerHTML='<span class="spin"></span> Ativando conta...';
     var senha=gerarSenha();
@@ -592,7 +592,7 @@ async function finalizar() {
   } catch(e){
     console.error(e);
     showErr('err3','Erro de conexão.');
-    btn.disabled=false; btn.innerHTML='🔒 Concluir Assinatura — R$89,90';
+    btn.disabled=false; btn.innerHTML='🔒 Confirmar Adesão — 12x R$89,90';
   }
 }
 
