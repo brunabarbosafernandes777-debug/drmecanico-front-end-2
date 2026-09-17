@@ -7,6 +7,7 @@
 <title>dr Mecânico — Assinar</title>
 <link rel="stylesheet" href="estilos.css">
 <script src="https://sdk.mercadopago.com/js/v2"></script>
+<script src="https://www.mercadopago.com/v2/security.js" view="checkout"></script>
 
 <style>
 .bottom-nav{bottom: 
@@ -288,7 +289,7 @@ body{
 
 
 <script>
-var TOTAL = 1.00; // ⚠️ TEMPORÁRIO PARA TESTE — voltar para 89.90 antes de liberar pros clientes!
+var TOTAL = 89.90;
 var step  = 1;
 var mp = null;
 
@@ -583,7 +584,7 @@ async function finalizar() {
     var r=await fetch('https://drmecanico-backend-2.onrender.com/api/pagamento/mp/assinatura',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({ nome:cliente.nome, email:cliente.email, cartoes:cartoes })
+      body:JSON.stringify({ nome:cliente.nome, email:cliente.email, cartoes:cartoes, deviceId: (window.MP_DEVICE_SESSION_ID || null) })
     });
     var data=await r.json();
     if(!r.ok||data.error){ showErr('err3',data.error||'Erro ao processar pagamento.'); btn.disabled=false; btn.innerHTML='🔒 Concluir Assinatura — R$89,90'; return; }
