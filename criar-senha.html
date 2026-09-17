@@ -202,8 +202,8 @@ body {
   </svg>
 
   <!-- Título -->
-  <div class="titulo-tela" id="titulo-tela">Verifique seu e-mail</div>
-  <div class="subtitulo-tela">e defina sua senha para acessar a plataforma</div>
+  <div class="titulo-tela" id="titulo-tela">Quase lá!</div>
+  <div class="subtitulo-tela">Defina sua senha para acessar a plataforma</div>
 
   <!-- Erro -->
   <div class="login-err" id="lerr"></div>
@@ -236,7 +236,7 @@ body {
     </button>
 
     <!-- Botão reenviar e-mail visível -->
-    <button class="btn-abs btn-reenviar-vis" id="btn-reenviar" onclick="reenviarEmail()">
+    <button class="btn-abs btn-reenviar-vis" id="btn-reenviar" onclick="reenviarEmail()" style="display:none">
       Reenviar e-mail de confirmação
     </button>
 
@@ -301,6 +301,10 @@ async function finalizarCadastro() {
     if (!r.ok) {
       throw new Error(data.error || 'Não foi possível concluir o cadastro.');
     }
+
+    localStorage.setItem('drm_token', data.token);
+    localStorage.setItem('drm_user', JSON.stringify(data.user));
+    localStorage.removeItem('drm_email_checkout');
 
     window.location.replace('/cliente.html');
 
