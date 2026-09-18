@@ -56,7 +56,7 @@ body{
 
   <div class="success" id="success">
     <div class="emj">🎉</div>
-    <h2>Bem-vindo ao Clube, <span id="success-nome"></span>!</h2>
+    <h2>Bem-vindo ao dr Mecânico, <span id="success-nome"></span>!</h2>
     <p>Assinatura confirmada! Falta só um passo: crie sua senha de acesso.</p>
     <div style="background:#f0f9ff;border:1.5px solid #00AEEF;border-radius:12px;padding:14px;margin:12px 0;text-align:left;width:100%">
       <div style="font-size:12px;color:#888;margin-bottom:4px">E-mail cadastrado</div>
@@ -538,6 +538,11 @@ async function finalizar() {
   if(dois) {
     valorC1=parseFloat(document.getElementById('valor-c1').value)||0;
     if(valorC1<=0||valorC1>=TOTAL){ showErr('err3','Valor do cartão 1 inválido.'); return; }
+    var VALOR_MINIMO_POR_CARTAO = 60; // R$5,00 por parcela x 12 parcelas
+    if(valorC1<VALOR_MINIMO_POR_CARTAO || (TOTAL-valorC1)<VALOR_MINIMO_POR_CARTAO){
+      showErr('err3','Cada cartão precisa somar pelo menos R$60,00 (equivalente a 12 parcelas de R$5,00, o mínimo aceito).');
+      return;
+    }
     v2 = parseFloat((TOTAL-valorC1).toFixed(2));
     c2num=document.getElementById('c2num').value.replace(/\s/g,'');
     c2nome=document.getElementById('c2nome').value.trim();
