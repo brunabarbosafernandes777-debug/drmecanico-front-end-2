@@ -208,7 +208,9 @@ body { background:white !important; display:flex; justify-content:center; min-he
   <button class="btn-over" id="btn-saber"   onclick="window.location.href='saiba-mais.html'"></button>
   <button class="btn-over" id="btn-comprar" onclick="window.location.href='comprar.html'"></button>
 
-  <div style="text-align:center; padding:10px 0 70px; position:relative; z-index:1000;">
+  <div style="height:34px;"></div>
+
+  <div id="link-endereco" style="text-align:center; z-index:1000;">
     <a href="endereco.html" style="color:#888; font-size:13px; text-decoration:underline; font-family:Arial,Helvetica,sans-serif;">Veja o endereço do dr Mecânico</a>
   </div>
 </div>
@@ -395,6 +397,20 @@ function posWpp(){
   btn.style.width  = (iw*0.8350) + 'px';
   btn.style.height = (ih*0.1482) + 'px';
 }
+
+function posEndereco(){
+  var wrapEl = document.querySelector('.page-wrap');
+  var link = document.getElementById('link-endereco');
+  if(!wrapEl || !link) return;
+  var wrapRect = wrapEl.getBoundingClientRect();
+  var bgRect = bgsvg.getBoundingClientRect();
+  if(!bgsvg.offsetHeight) return;
+  var offsetTop = bgRect.bottom - wrapRect.top;
+  link.style.position = 'absolute';
+  link.style.left = '0';
+  link.style.width = '100%';
+  link.style.top = (offsetTop + 10) + 'px';
+}
 /*function posicionar(){
   var iw = bgsvg.offsetWidth;
   var ih = bgsvg.offsetHeight;
@@ -424,6 +440,7 @@ function posWpp(){
 posBtn('btn-saber',   0.083,0.850,0.399,0.082);
   posBtn('btn-comprar', 0.518,0.850,0.399,0.082);
   posWpp();
+  posEndereco();
 
   
 }
