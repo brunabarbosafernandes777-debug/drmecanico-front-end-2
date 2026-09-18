@@ -412,6 +412,15 @@ window.addEventListener('resize', posicionar);
 window.addEventListener('load', posicionar);
 if(bgsvg.complete) posicionar();
 
+var bgsvgTopo = document.getElementById('bgsvg-top');
+if(bgsvgTopo){
+  bgsvgTopo.addEventListener('load', posicionar);
+  if(bgsvgTopo.complete) posicionar();
+}
+// Passada de segurança extra, garantindo que tudo já carregou de verdade
+setTimeout(posicionar, 300);
+setTimeout(posicionar, 1000);
+
 // ── WhatsApp ─────────────────────────────────────────────
 function abrirWpp() {
   var msg = encodeURIComponent('Olá, quero tirar algumas duvidas sobre o dr mecanico, pode me ajudar?');
