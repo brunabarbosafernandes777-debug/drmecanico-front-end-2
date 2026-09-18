@@ -372,6 +372,24 @@ function posBtn(id,l,t,w,h){
   el.style.left=(iw*l)+'px'; el.style.top=(ih*t)+'px';
   el.style.width=(iw*w)+'px'; el.style.height=(ih*h)+'px';
 }
+
+// Posiciona o botão do WhatsApp medindo a posição real do bgsvg em relação ao page-wrap,
+// em vez de assumir que os dois começam no mesmo lugar (evita o problema da logo acima).
+function posWpp(){
+  var wrapEl = document.querySelector('.page-wrap');
+  var btn = document.getElementById('btn-wpp');
+  if(!wrapEl || !btn) return;
+  var wrapRect = wrapEl.getBoundingClientRect();
+  var bgRect = bgsvg.getBoundingClientRect();
+  var iw = bgsvg.offsetWidth, ih = bgsvg.offsetHeight;
+  if(!ih) return;
+  var offsetLeft = bgRect.left - wrapRect.left;
+  var offsetTop  = bgRect.top  - wrapRect.top;
+  btn.style.left   = (offsetLeft + iw*0.0825) + 'px';
+  btn.style.top    = (offsetTop  + ih*0.7669) + 'px';
+  btn.style.width  = (iw*0.8350) + 'px';
+  btn.style.height = (ih*0.1482) + 'px';
+}
 /*function posicionar(){
   var iw = bgsvg.offsetWidth;
   var ih = bgsvg.offsetHeight;
@@ -400,7 +418,7 @@ function posBtn(id,l,t,w,h){
   }
 posBtn('btn-saber',   0.083,0.850,0.399,0.082);
   posBtn('btn-comprar', 0.518,0.850,0.399,0.082);
-  posBtn('btn-wpp',     0.0825,0.7669,0.8350,0.1482);
+  posWpp();
 
   
 }
