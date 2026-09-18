@@ -369,9 +369,7 @@ var bgsvg = document.getElementById('bgsvg');
 function posBtn(id,l,t,w,h){
   var el=document.getElementById(id);
   var iw=bgsvg.offsetWidth, ih=bgsvg.offsetHeight;
-  var topoEl = document.querySelector('.topo');
-  var topoH = topoEl ? topoEl.offsetHeight : 0;
-  el.style.left=(iw*l)+'px'; el.style.top=(topoH + ih*t)+'px';
+  el.style.left=(iw*l)+'px'; el.style.top=(ih*t)+'px';
   el.style.width=(iw*w)+'px'; el.style.height=(ih*h)+'px';
 }
 /*function posicionar(){
