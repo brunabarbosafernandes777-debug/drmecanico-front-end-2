@@ -54,7 +54,8 @@ body { background:white !important; display:flex; justify-content:center; min-he
 .dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.5) !important; cursor:pointer; transition:all 0.3s; }
 .dot.active { background:white !important; width:18px; border-radius:3px; }
 
-.btn-over { position:absolute; z-index:999; background:transparent; border:none; cursor:pointer; border-radius:40px; }
+.btn-over { position:absolute; z-index:999; background:transparent; border:none; outline:none; -webkit-appearance:none; appearance:none; -webkit-tap-highlight-color:transparent; cursor:pointer; border-radius:40px; }
+.btn-over:focus { outline:none; }
 .btn-over:active { opacity:0.15; background:white !important; }
 
  #dots{
