@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dr Mecânico — Endereço</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Arial, Helvetica, sans-serif; background:#f5f5f5; }
+.page-wrap { max-width:480px; margin:0 auto; background:#fff; min-height:100vh; }
+.topo {
+  background: linear-gradient(160deg, #6260f3 0%, #4745F1 40%, #3533d4 100%);
+  color:#fff;
+  padding: 24px 20px;
+}
+.topo a {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 14px;
+}
+.topo h1 { font-size: 20px; margin-top: 12px; }
+.conteudo { padding: 20px; }
+.endereco-box {
+  background: #f0f9ff;
+  border: 1.5px solid #00AEEF;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.mapa-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.mapa-wrap iframe {
+  width: 100%;
+  height: 350px;
+  border: 0;
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="topo">
+    <a href="home.html">← Voltar</a>
+    <h1>Nosso Endereço</h1>
+  </div>
+
+  <div class="conteudo">
+    <div class="endereco-box">
+      <strong>dr Mecânico</strong><br>
+      Rua Exemplo, 123 — Bairro Centro<br>
+      Aracruz — ES, 29190-000
+    </div>
+
+    <div class="mapa-wrap">
+      <iframe
+        src="https://www.google.com/maps?q=Aracruz,+ES&output=embed"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
